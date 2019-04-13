@@ -3,7 +3,7 @@ const app = require("express")();
 const { json } = require("body-parser");
 const massive = require("massive");
 const { login, register } = require('./controllers/userCtrl')
-const { getRosary, getDailyPrayers } = require('./controllers/prayerCtrl')
+const { getPrayers } = require('./controllers/prayerCtrl')
 
 app.use(json());
 
@@ -18,8 +18,7 @@ app.post('/login', login)
 app.post('/register', register)
 
 // ----------PRAYER ENDPOINTS------------
-app.get('/prayers/rosary', getRosary)
-app.get('/prayers/daily', getDailyPrayers)
+app.get('/prayers/:type', getPrayers)
 
 
 

@@ -34,7 +34,7 @@ async function register(req, res){
     let hash = await bcrypt.hash(req.body.password, 10)
     console.log(firstName, lastName)
     let registeredUser = await db.register_user([firstName, lastName, email, hash])
-    return res.status(200).send(registeredUser)
+    return res.status(200).send(registeredUser[0])
   } catch (error) {
     return res.status(422).send(console.log("Couldn't register"))
   }
