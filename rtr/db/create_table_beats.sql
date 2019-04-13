@@ -1,5 +1,5 @@
-create table beats (
-id serial primary key
-, beat_name text
-, url text
+CREATE TABLE beats (
+id SERIAL PRIMARY KEY   
+, beat_name TEXT
+, beats_url TEXT
 );
