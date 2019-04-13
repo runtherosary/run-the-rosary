@@ -71,8 +71,6 @@ export default class GetStarted extends React.Component {
             /> */}
             <Text style={{ color: 'white', fontSize: 18, fontFamily: 'Avenir Next', fontWeight: '600' }}>{e.modal}</Text>
 
-
-
             {
               page === 1 ? (
                 <View

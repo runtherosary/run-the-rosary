@@ -11,6 +11,7 @@ import {
 import { Button } from "react-native-elements";
 import { height, width } from "../constants/Layout";
 import GetStarted from "../components/modals/GetStarted";
+import Carousel from "../components/Carousel/Carousel";
 import clouds from "../assets/images/cloud-splash.jpg";
 
 export default class SplashScreen extends React.Component {
@@ -70,7 +71,8 @@ export default class SplashScreen extends React.Component {
             </View>
           </ScrollView>
         ) : (
-            <GetStarted getStarted={this.getStarted} />
+            // <GetStarted getStarted={this.getStarted} />
+            <Carousel carousel={this.carousel} />
             //   If it isn't the user's first time on the app then they don't need this FYI
           )}
       </ImageBackground>
