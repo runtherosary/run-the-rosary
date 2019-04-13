@@ -1,3 +1,4 @@
+//Takes in string equivalent to type of prayer. EG. 'Rosary' or "General"
 function getPrayersByType(req, res){
   const db = req.app.get('db')
   
@@ -6,6 +7,7 @@ function getPrayersByType(req, res){
   .catch(err => res.status(500).send(err))
 }
 
+//Takes in integer id number
 function getPrayersByID(req, res){
   const db = req.app.get('db')
   
@@ -14,6 +16,7 @@ function getPrayersByID(req, res){
   .catch(err => res.status(500).send(err))
 }
 
+//Takes in string equivalent to category name EG. 'Joyful'
 function getPrayersByCategory(req, res){
   const db = req.app.get('db')
   
@@ -22,6 +25,7 @@ function getPrayersByCategory(req, res){
   .catch(err => res.status(500).send(err))
 }
 
+//Takes in string equivalent to day of week it is EG. 'Monday'
 function getPrayersByDay(req, res){
   const db = req.app.get('db')
   
