@@ -1,137 +1,136 @@
-import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity
-} from "react-native";
-import { Button } from "react-native-elements";
-import { ExpoLinksView } from "@expo/samples";
+import React from 'react';
+import { ScrollView, StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
+import { Button } from 'react-native-elements';
+import { ExpoLinksView } from '@expo/samples';
+import background from '../assets/images/login-background.jpg';
+import Icon from 'react-native-vector-icons/AntDesign';
+import colors from '../constants/Colors';
 
-import { height, width } from "../constants/Layout";
+import { height, width } from '../constants/Layout';
 
 export default class LoginScreen extends React.Component {
-  state = {
-    secure: true
-  };
+	state = {
+		secure: true,
+	};
 
-  static navigationOptions = {
-    header: null,
-    footer: null
-  };
+	static navigationOptions = {
+		header: null,
+		footer: null,
+	};
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.container}>
-          <View style={{ alignItems: "center" }}>
-            <Text style={styles.title}>Login</Text>
-          </View>
-          <TouchableOpacity>
-            <Text style={[styles.text, { marginBottom: 10 }]}>
-              "Register for a new account."
-            </Text>
-          </TouchableOpacity>
-          <TouchableHighlight>
-            <TextInput
-              onChangeText={text => this.setState({ username: text })}
-              style={styles.username}
-              //   value={!this.state.username ? null : this.state.username}
-              placeholder="USERNAME"
-              autoCapitalize="none"
-              underlineColorAndroid="transparent"
-              placeholderTextColor="gray"
-              placeholderTextFontWeight="bold"
-            />
-          </TouchableHighlight>
-          <TouchableHighlight>
-            <TextInput
-              onChangeText={text => this.setState({ password: text })}
-              style={styles.password}
-              //   value={!this.state.password ? null : this.state.password}
-              placeholder="PASSWORD"
-              autoCapitalize="none"
-              underlineColorAndroid="transparent"
-              placeholderTextColor="gray"
-              secureTextEntry={this.state.secure}
-            />
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => this.setState({ secure: !this.state.secure })}>
-            <Text style={styles.text}>Show Password</Text>
-          </TouchableHighlight>
+	render() {
+		let { secure } = this.state;
+		const back = <Icon name='arrowleft' size={30} color='#fff' />;
+		return (
+			<ImageBackground style={styles.container} source={background}>
+				<View style={{ flex: 1, width: width, marginTop: 40 }}>
+					<TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.back}>
+						{back}
+					</TouchableOpacity>
+					<View>
+						<Text style={styles.title}>Run the Rosary</Text>
+					</View>
+				</View>
 
-          <View style={styles.linebreak} />
-
-          <TouchableOpacity>
-            <Button
-              onPress={() => this.props.navigation.navigate("Home")}
-              title="BACK"
-              buttonStyle={{
-                width: width - 250,
-                height: height - height / 0.8,
-                marginTop: 10,
-                borderWidth: 3,
-                borderRadius: 5
-              }}
-              textStyle={{
-                fontSize: 18,
-                letterSpacing: 1
-              }}
-            />
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
-    );
-  }
+				<View style={styles.loginContainer}>
+					<TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}>
+						<Text style={[styles.register, { marginBottom: 10 }]}>Register for a new account.</Text>
+					</TouchableOpacity>
+					<TouchableHighlight>
+						<TextInput
+							onChangeText={(text) => this.setState({ username: text })}
+							style={styles.username}
+							//   value={!this.state.username ? null : this.state.username}
+							placeholder='Email'
+							autoCapitalize='none'
+							underlineColorAndroid='transparent'
+							placeholderTextColor='white'
+							placeholderTextFontWeight='bold'
+						/>
+					</TouchableHighlight>
+					<TouchableHighlight>
+						<TextInput
+							onChangeText={(text) => this.setState({ password: text })}
+							style={styles.password}
+							//   value={!this.state.password ? null : this.state.password}
+							placeholder='Password'
+							autoCapitalize='none'
+							underlineColorAndroid='transparent'
+							placeholderTextColor='white'
+							secureTextEntry={this.state.secure}
+						/>
+					</TouchableHighlight>
+					<TouchableOpacity
+						onPress={() => this.setState({ secure: !this.state.secure })}
+						style={{ justifyContent: 'center', alignItems: 'center' }}>
+						<Text style={secure ? styles.hide : styles.show}>Show Password</Text>
+					</TouchableOpacity>
+				</View>
+			</ImageBackground>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  linebreak: {
-    borderBottomColor: "black",
-    borderBottomWidth: 2,
-    marginTop: 15,
-    marginBottom: 30
-  },
-  username: {
-    width: width - 65,
-    height: height - height / 1.12,
-    paddingLeft: 25,
-    marginVertical: 10,
-    borderRadius: 4,
-    borderWidth: 1,
-    textDecorationLine: "none"
-  },
-  password: {
-    width: width - 65,
-    height: height - height / 1.12,
-    paddingLeft: 25,
-    marginVertical: 10,
-    borderRadius: 4,
-    borderWidth: 1,
-    textDecorationLine: "none"
-  },
-  title: {
-    textShadowColor: "black",
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 8,
-    textAlign: "center",
-    color: "white",
-    fontSize: 70,
-    marginTop: 70,
-    marginBottom: 40
-  },
-  text: {
-    fontSize: 12,
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 4
-  }
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: 30,
+	},
+	back: {
+		justifyContent: 'flex-start',
+		marginLeft: 40,
+	},
+	username: {
+		width: width - 65,
+		paddingLeft: 5,
+		paddingBottom: 15,
+		marginVertical: 40,
+		borderRadius: 4,
+		borderBottomWidth: 1,
+		borderColor: 'white',
+	},
+	password: {
+		width: width - 65,
+		paddingLeft: 5,
+		paddingBottom: 15,
+		marginBottom: 5,
+		borderRadius: 4,
+		borderBottomWidth: 1,
+		borderColor: 'white',
+		textDecorationLine: 'none',
+	},
+	loginContainer: {
+		justifyContent: 'flex-end',
+		marginBottom: 100,
+	},
+	title: {
+		textShadowColor: 'gray',
+		textShadowOffset: { width: -1, height: 1 },
+		textShadowRadius: 2,
+		textAlign: 'center',
+		color: 'white',
+		fontSize: 40,
+		marginTop: 200,
+		marginBottom: 40,
+	},
+	show: {
+		fontSize: 12,
+		textShadowOffset: { width: 1, height: 1 },
+		textShadowRadius: 4,
+		color: 'white',
+	},
+	hide: {
+		fontSize: 12,
+		textShadowOffset: { width: 1, height: 1 },
+		textShadowRadius: 4,
+		color: colors.blue,
+	},
+	register: {
+		fontSize: 15,
+		textShadowOffset: { width: 1, height: 1 },
+		textShadowRadius: 4,
+		color: 'white',
+	},
 });
