@@ -2,7 +2,7 @@ require("dotenv").config();
 const app = require("express")();
 const { json } = require("body-parser");
 const massive = require("massive");
-const { login, register, getAllUsers } = require('./controllers/userCtrl')
+const { login, register, currentUser, getAllUsers } = require('./controllers/userCtrl')
 const { getPrayersByID, getPrayersByType, getPrayersByCategory, getPrayersByDay, getAllPrayers} = require('./controllers/prayerCtrl')
 
 app.use(json());
