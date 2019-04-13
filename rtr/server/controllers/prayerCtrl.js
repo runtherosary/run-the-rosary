@@ -11,7 +11,7 @@ function getPrayersByType(req, res){
 function getPrayersByID(req, res){
   const db = req.app.get('db')
   
-  db.get_prayers_by_type(+req.params.id)
+  db.get_prayer_by_id(+req.params.id)
   .then(response =>  res.status(200).send(response))
   .catch(err => res.status(500).send(err))
 }
