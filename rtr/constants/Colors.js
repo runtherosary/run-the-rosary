@@ -16,5 +16,6 @@ export default {
 	falu: '#8E1616',
 	maya: '#4FC1F9',
 	teal: '#2A6684',
-	blue: '#6BEAFE',
+    blue: '#6BEAFE',
+    red: "#FF8C85"
 };

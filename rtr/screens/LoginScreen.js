@@ -10,7 +10,12 @@ import { height, width } from '../constants/Layout';
 
 export default class LoginScreen extends React.Component {
 	state = {
-		secure: true,
+        secure: true,
+        confirmSecure: true,
+        register: false,
+        invalidConfirm: false,
+        password: '',
+        confirmPassword: ''
 	};
 
 	static navigationOptions = {
@@ -19,8 +24,9 @@ export default class LoginScreen extends React.Component {
 	};
 
 	render() {
-		let { secure } = this.state;
-		const back = <Icon name='arrowleft' size={30} color='#fff' />;
+		let { secure, register, invalidConfirm, password, confirmPassword } = this.state;
+        const back = <Icon name='arrowleft' size={30} color='#fff' />;
+        const submit = <Icon name='arrowright' size={30} color='#fff' />;
 		return (
 			<ImageBackground style={styles.container} source={background}>
 				<View style={{ flex: 1, width: width, marginTop: 40 }}>
@@ -33,38 +39,97 @@ export default class LoginScreen extends React.Component {
 				</View>
 
 				<View style={styles.loginContainer}>
-					<TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}>
-						<Text style={[styles.register, { marginBottom: 10 }]}>Register for a new account.</Text>
-					</TouchableOpacity>
+					<View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={styles.account}><Text style={register ? styles.account : styles.register} onPress={() => this.setState({register: !this.state.register})}>
+                            Register
+                        </Text> for a new account. 
+                        </Text>
+					</View>
 					<TouchableHighlight>
 						<TextInput
 							onChangeText={(text) => this.setState({ username: text })}
-							style={styles.username}
+							style={styles.input}
 							//   value={!this.state.username ? null : this.state.username}
 							placeholder='Email'
 							autoCapitalize='none'
-							underlineColorAndroid='transparent'
 							placeholderTextColor='white'
-							placeholderTextFontWeight='bold'
+                            placeholderTextFontWeight='bold'
+                            selectionColor='white'
 						/>
 					</TouchableHighlight>
 					<TouchableHighlight>
 						<TextInput
 							onChangeText={(text) => this.setState({ password: text })}
-							style={styles.password}
+							style={styles.passwordInput}
 							//   value={!this.state.password ? null : this.state.password}
-							placeholder='Password'
+                            placeholder='Password'
+                            selectionColor='white'
 							autoCapitalize='none'
-							underlineColorAndroid='transparent'
 							placeholderTextColor='white'
 							secureTextEntry={this.state.secure}
 						/>
 					</TouchableHighlight>
-					<TouchableOpacity
+                    <TouchableOpacity
 						onPress={() => this.setState({ secure: !this.state.secure })}
 						style={{ justifyContent: 'center', alignItems: 'center' }}>
-						<Text style={secure ? styles.hide : styles.show}>Show Password</Text>
+						{secure ? (
+                        <Text style={styles.show}>Show Password</Text>
+                        ) : (
+                            <Text style={styles.hide}>Hide Password</Text>
+                        )}
 					</TouchableOpacity>
+
+                      {register ? (
+                          <View>
+                                <TouchableHighlight>
+						            <TextInput
+							onChangeText={(text) => this.setState({ confirmPassword: text })}
+							style={[styles.passwordInput, {marginTop: 20}]}
+                            //   value={!this.state.password ? null : this.state.password}
+                            placeholder='Confirm Password'
+                            selectionColor='white'
+                            
+							autoCapitalize='none'
+							placeholderTextColor='white'
+							secureTextEntry={this.state.confirmSecure}
+						/>
+					</TouchableHighlight>
+
+                                    <Text style={invalidConfirm ? styles.invalid : styles.match}>Passwords do not match.</Text>
+
+                    <TouchableHighlight>
+                        <TextInput 
+                            onChangeText={(text) => this.setState({firstName: text})}
+                            style={styles.input}
+                            selectionColor='white'
+
+                            placeholder='First Name'
+                            autoCapitalize="none"
+                            placeholderTextColor="white"
+                        />
+                    </TouchableHighlight>
+                    <TouchableHighlight>
+                        <TextInput 
+                            onChangeText={(text) => this.setState({lastName: text})}
+                            style={styles.input}
+                            selectionColor='white'
+
+                            placeholder='Last Name'
+                            autoCapitalize="none"
+                            placeholderTextColor="white"
+                        />
+                    </TouchableHighlight>
+                    <TouchableOpacity onPress={() => {
+                        if (confirmPassword !== password) {
+                            this.setState({invalidConfirm:true})
+                        } else {
+                            this.props.navigation.navigate('Home')
+                        }
+                        }} style={{justifyContent: 'center', alignItems: 'center'}} >
+						{submit}
+					</TouchableOpacity>
+                    </View>
+                      ) : null}
 				</View>
 			</ImageBackground>
 		);
@@ -82,7 +147,9 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		marginLeft: 40,
 	},
-	username: {
+	input: {
+        color: 'white',
+        fontWeight: 'bold',
 		width: width - 65,
 		paddingLeft: 5,
 		paddingBottom: 15,
@@ -90,17 +157,18 @@ const styles = StyleSheet.create({
 		borderRadius: 4,
 		borderBottomWidth: 1,
 		borderColor: 'white',
-	},
-	password: {
-		width: width - 65,
+    },
+    passwordInput: {
+        color: 'white',
+        fontWeight: 'bold',
+        width: width - 65,
 		paddingLeft: 5,
 		paddingBottom: 15,
-		marginBottom: 5,
+		// marginTop: 40,
 		borderRadius: 4,
 		borderBottomWidth: 1,
 		borderColor: 'white',
-		textDecorationLine: 'none',
-	},
+    },
 	loginContainer: {
 		justifyContent: 'flex-end',
 		marginBottom: 100,
@@ -115,22 +183,29 @@ const styles = StyleSheet.create({
 		marginTop: 200,
 		marginBottom: 40,
 	},
-	show: {
-		fontSize: 12,
-		textShadowOffset: { width: 1, height: 1 },
-		textShadowRadius: 4,
-		color: 'white',
-	},
 	hide: {
 		fontSize: 12,
-		textShadowOffset: { width: 1, height: 1 },
-		textShadowRadius: 4,
+		color: 'white',
+	},
+	show: {
+		fontSize: 12,
 		color: colors.blue,
 	},
 	register: {
-		fontSize: 15,
-		textShadowOffset: { width: 1, height: 1 },
-		textShadowRadius: 4,
+        fontSize: 15,
+        marginBottom: 10,
+		color: colors.blue,
+    },
+    account: {
+        fontSize: 15,
+        marginBottom: 10,
 		color: 'white',
-	},
+    },
+    invalid: {
+        color: colors.red,
+        fontSize: 15,
+    },
+    match: {
+        opacity: 0
+    }
 });
