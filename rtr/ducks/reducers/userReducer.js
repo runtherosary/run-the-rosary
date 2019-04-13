@@ -35,6 +35,7 @@ export default function(state = initialState, action){
         isLoading: true
       }
     case `${GET_ALL_USERS}_FULFILLED`:
+    
       return{
         ...state,
         users: action.payload.data

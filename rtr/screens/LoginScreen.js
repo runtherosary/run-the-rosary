@@ -18,7 +18,7 @@ class LoginScreen extends React.Component {
         confirmSecure: true,
         signUp: false,
         invalidConfirm: false,
-        email: '',
+        email: 'email@email.com',
         password: '',
         confirmPassword: '',
         firstName: '',
@@ -32,27 +32,29 @@ class LoginScreen extends React.Component {
     };
 
         componentDidMount = async () => {
-            // let {getAllUsers} = this.props;
-            // await getAllUsers();
-    
-            // await AsyncStorage.setItem('user', this.state.name);
-    
-            // await AsyncStorage.getItem('user').then(res => {
-            //     console.warn("Splash 32", res);
-            //     this.setState({user:res})
-            // }).catch(err => console.warn(err ));
-    
-            var userExists = await AsyncStorage.getItem('user');
-            
-            if (userExists) {
-                console.warn(userExists);
-                let {email, password} = userExists;
-                this.setState({email, password});
-            } else {
-                userExists = []
+            // console.log("Current User: ", this.props.user)
+
+            let person = {
+                email: 'email@email.com',
+                password: 'password'
             }
+  
+            await AsyncStorage.setItem("user", this.state.email);
+            const user = await AsyncStorage.getItem('user');
+            console.log("User: ", user)
+    
+            // var userExists = await AsyncStorage.getItem('user');
+            // var async = await AsyncStorage.getAllKeys();
+            // console.log("Async: ", async)
+            
+            // if (userExists) {
+            //     console.log("User: ", userExists)
+            //     let {email, password} = userExists;
+            //     this.setState({email, password});
+            // } else {
+            //     userExists = []
+            // }
         }
-    // };
     
  authenticate = async () => {
         let { email, password, firstName, lastName, signUp } = this.state;
@@ -95,11 +97,11 @@ class LoginScreen extends React.Component {
 		return (
 			<ImageBackground style={styles.container} source={background}>
 				<View style={{ flex: 1, width: width, marginTop: 40 }}>
-					<TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.back}>
+					<TouchableOpacity onPress={() => this.props.navigation.navigate('Splash')} style={styles.back}>
 						{back}
 					</TouchableOpacity>
 					<View>
-						<Text style={styles.title}>Run the Rosary</Text>
+						<Text style={signUp ? [styles.title, {marginTop: 50}] : styles.title}>Run the Rosary</Text>
 					</View>
 				</View>
 
@@ -149,7 +151,7 @@ class LoginScreen extends React.Component {
                                 this.authenticate();
                                 this.props.navigation.navigate('Home')
                             }}
-                        style={{justifyContent: 'center', alignItems: 'center'}} >
+                        style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}} >
                             {submit}
                         </TouchableOpacity>
                     )}
@@ -163,7 +165,6 @@ class LoginScreen extends React.Component {
                             value={confirmPassword ? confirmPassword : null}
                             placeholder='Confirm Password'
                             selectionColor='white'
-                            
 							autoCapitalize='none'
 							placeholderTextColor='white'
 							secureTextEntry={this.state.confirmSecure}
@@ -201,7 +202,7 @@ class LoginScreen extends React.Component {
                             this.authenticate();
                             this.props.navigation.navigate('Home')
                         }
-                        }} style={{justifyContent: 'center', alignItems: 'center'}} >
+                        }} style={{justifyContent: 'center', alignItems: 'center', marginTop: 30}} >
 						{submit}
 					</TouchableOpacity>
                     </View>
@@ -229,7 +230,7 @@ const styles = StyleSheet.create({
 		width: width - 65,
 		paddingLeft: 5,
 		paddingBottom: 15,
-		marginVertical: 40,
+		marginTop: 40,
 		borderRadius: 4,
 		borderBottomWidth: 1,
 		borderColor: 'white',
@@ -238,9 +239,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         width: width - 65,
+        marginTop: 40,
 		paddingLeft: 5,
 		paddingBottom: 15,
-		// marginTop: 40,
 		borderRadius: 4,
 		borderBottomWidth: 1,
 		borderColor: 'white',
@@ -256,14 +257,15 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		color: 'white',
 		fontSize: 40,
-		marginTop: 200,
-		marginBottom: 40,
+		marginTop: 140,
 	},
 	hide: {
+        marginTop: 5,
 		fontSize: 12,
 		color: 'white',
 	},
 	show: {
+        marginTop: 5,
 		fontSize: 12,
 		color: colors.blue,
 	},

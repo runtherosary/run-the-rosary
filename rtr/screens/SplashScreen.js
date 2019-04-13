@@ -30,15 +30,46 @@ class SplashScreen extends React.Component {
 			<ImageBackground source={background} style={{ flex: 1 }}>
 				{/* {!this.state.user ? ( */}
 				<ScrollView contentContainerStyle={styles.container}>
-					<View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 150 }}>
+					<View style={{ flex: 1, width, marginTop: 40 }}>
 						<Text style={styles.title}>Run the Rosary</Text>
 					</View>
+<View style={styles.register}>
 
-					<TouchableOpacity
-						style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 300 }}
-						onPress={() => this.props.navigation.navigate('Login')}>
-						<Text style={styles.start}>START</Text>
-					</TouchableOpacity>
+                    <Button
+							title='Register'
+                            onPress={() => this.props.navigation.navigate('Login')}
+                            buttonStyle={{
+                                backgroundColor: colors.blue,
+                                marginVertical: 5,
+								height: 50,
+								width: width - 50,
+                            }}
+                            textStyle={{
+                                color: 'white',
+                                fontSize: 30,
+                                fontWeight: 'bold',
+                                letterSpacing: 2
+                            }}
+                            />
+                        <Button
+							title='Login'
+                            onPress={() => this.props.navigation.navigate('Login')}
+							buttonStyle={{
+                                backgroundColor: 'transparent',
+                                borderColor: 'white',
+                                borderWidth: 1,
+                                marginVertical: 5,
+								height: 50,
+								width: width - 50,
+                            }}
+                            textStyle={{
+                                color: 'white',
+                                fontSize: 30,
+                                fontWeight: 'bold',
+                                letterSpacing: 2
+                            }}
+                            />
+                            </View>
 				</ScrollView>
 				{/* ) : (
           <GetStarted getStarted={this.getStarted} />
@@ -54,20 +85,27 @@ const styles = StyleSheet.create({
 		flex: 1,
 		flexDirection: 'column',
 		alignItems: 'center',
-	},
+    },
+    register: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginBottom: 150,
+        marginHorizontal: 50
+    },
 	title: {
-		textShadowColor: 'black',
+		textShadowColor: 'gray',
 		textShadowOffset: { width: -1, height: 1 },
-		textShadowRadius: 8,
+		textShadowRadius: 2,
 		textAlign: 'center',
 		color: 'white',
-		fontSize: 50,
+		fontSize: 40,
+        marginTop: 200,
+        marginBottom: 40
 	},
 
 	start: {
 		fontSize: 45,
-		color: colors.blue,
-		// fontWeight: 'bold',
+		color: colors.blue
 	},
 });
 

@@ -1,17 +1,37 @@
 import React from "react";
 import { StyleSheet, View, ImageBackground } from "react-native";
+import {AsyncStorage} from 'react-native';
 import { height, width } from "../constants/Layout";
 import clouds from "../assets/images/cloud-splash.jpg";
 
 import Animation from "lottie-react-native";
 import stopwatch from "../assets/animations/stopwatch.json";
 
-export default class PrayerSplash extends React.Component {
-  async componentDidMount() {
+export default class LoadingScreen extends React.Component {
+    state = {
+        isLoading: true
+    }
+
+  componentDidMount = async() => {
+      let {isLoading} = this.state;
+    const user = await AsyncStorage.getItem('user');
+
+    if (user) {
+        this.setState({isLoading: false})
+    }
+
     this.animation.play();
+        if (user) {
     setTimeout(() => {
-      this.props.navigation.navigate("Splash");
-    }, 2000);
+            this.props.navigation.navigate("Splash");
+            // NEED TO SWAP NAV LOGIC BEFORE PUSHING !!!
+        }, !isLoading);
+        } else {
+            setTimeout(() => {
+                this.props.navigation.navigate("Home");
+            }, 5000)
+        }
+    console.warn("User: ", user);
   }
 
   render() {
