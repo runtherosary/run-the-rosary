@@ -21,8 +21,9 @@ async function register(req, res){
   let { email, firstName, lastName } = req.body
   try {
     let user = await db.get_user(email)
-    if(user[0]){
-      return console.log(user) || res.status(422).send(console.log("Email already registered"))
+    console.log(user)
+    if(user[0].email){
+      return res.status(422).send(console.log("Email already registered"))
     }
   } catch (error) {
     console.log(error)
@@ -30,10 +31,11 @@ async function register(req, res){
 
   try {
     let hash = await bcrypt.hash(req.body.password, 10)
+    console.log(firstName, lastName)
     let registeredUser = await db.register_user([firstName, lastName, email, hash])
     return res.status(200).send(registeredUser)
   } catch (error) {
-    return res.status(422).send(console.log("Email already registered"))
+    return res.status(422).send(console.log("Couldn't register"))
   }
   
 }
