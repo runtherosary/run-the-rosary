@@ -14,6 +14,7 @@ export default class LoginScreen extends React.Component {
         confirmSecure: true,
         register: false,
         invalidConfirm: false,
+        email: '',
         password: '',
         confirmPassword: ''
 	};
@@ -21,7 +22,9 @@ export default class LoginScreen extends React.Component {
 	static navigationOptions = {
 		header: null,
 		footer: null,
-	};
+    };
+    
+
 
 	render() {
 		let { secure, register, invalidConfirm, password, confirmPassword } = this.state;
@@ -123,6 +126,7 @@ export default class LoginScreen extends React.Component {
                         if (confirmPassword !== password) {
                             this.setState({invalidConfirm:true})
                         } else {
+                            // send REGISTER data here !!
                             this.props.navigation.navigate('Home')
                         }
                         }} style={{justifyContent: 'center', alignItems: 'center'}} >
