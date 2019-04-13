@@ -2,13 +2,14 @@ import axios from 'axios'
 
 const initialState = {
   user: {},
+  users: [],
   prayers: [],
   isLoading: false
 }
 
 const LOGIN = 'LOGIN'
 const REGISTER_USER = 'REGISTER_USER'
-const GET_PRAYERS = 'GET_PRAYERS'
+const GET_ALL_USERS = 'GET_ALL_USERS'
 
 
 export default function (state = initialState, action) {
@@ -33,12 +34,15 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: true
       }
-    case `${GET_PRAYERS}_FULFILLED`:
+
+    case `${GET_ALL_USERS}_FULFILLED`:
+
       return {
         ...state,
-        prayers: action.payload.data
+        users: action.payload.data
       }
-    case `${GET_PRAYERS}_PENDING`:
+
+    case `${GET_ALL_USERS}_PENDING`:
       return {
         ...state,
         isLoading: true
@@ -52,20 +56,20 @@ export default function (state = initialState, action) {
 export function register(firstName, lastName, email, password) {
   return {
     type: REGISTER_USER,
-    payload: axios.post('/register', { firstName, lastName, email, password })
+    payload: axios.post('http://localhost:3001/register', { firstName, lastName, email, password })
   }
 }
 
 export function login(email, password) {
   return {
     type: LOGIN,
-    payload: axios('/login', { email, password })
+    payload: axios.post('http://localhost:3001/login', { email, password })
   }
 }
 
-export function getPrayers(type) {
+export function getAllUsers() {
   return {
-    type: GET_PRAYERS,
-    payload: axios(`/prayers/${type}`)
+    type: GET_ALL_USERS,
+    payload: axios.get('http://localhost:3001/users')
   }
 }
