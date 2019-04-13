@@ -9,6 +9,7 @@ const GET_PRAYERS_BY_TYPE = 'GET_PRAYERS_BY_TYPE'
 const GET_PRAYERS_BY_ID = 'GET_PRAYERS_BY_ID'
 const GET_PRAYERS_BY_DAY = 'GET_PRAYERS_BY_DAY'
 const GET_PRAYERS_BY_CATEGORY = 'GET_PRAYERS_BY_CATEGORY'
+const GET_ALL_PRAYERS = 'GET_ALL_PRAYERS'
 
 
 export default function(state = initialState, action){
