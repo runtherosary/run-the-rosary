@@ -1,8 +1,8 @@
-create table prayers (
-id serial primary key
-, prayer_name text
-, prayer_type_id int references prayer_type (id)
-, prayer_mystery_category_id int references prayer_mystery_category (id)
-, prayer_day_id int references prayer_day (id)
-, prayer_url text
+CREATE TABLE prayers (
+id SERIAL PRIMARY KEY
+, prayer_name TEXT
+, prayer_type_id INT REFERENCES prayer_type (id)
+, prayer_mystery_category_id INT REFERENCES prayer_mystery_category (id)
+, prayer_day_id INT REFERENCES prayer_day (id)
+, prayer_url TEXT
 );
