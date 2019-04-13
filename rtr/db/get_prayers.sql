@@ -1,2 +1,2 @@
-select *
-from prayers;
+SELECT *
+FROM prayers;

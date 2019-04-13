@@ -2,8 +2,8 @@ require("dotenv").config();
 const app = require("express")();
 const { json } = require("body-parser");
 const massive = require("massive");
-const { login, register } = require('./controllers/userCtrl')
-const { getRosary, getDailyPrayers } = require('./controllers/prayerCtrl')
+const { login, register, getAllUsers } = require('./controllers/userCtrl')
+const { getPrayersByID, getPrayersByType, getPrayersByCategory, getPrayersByDay, getAllPrayers} = require('./controllers/prayerCtrl')
 
 app.use(json());
 
@@ -16,10 +16,14 @@ massive(process.env.CONNECTION_STRING)
 // ----------USER ENDPOINTS------------
 app.post('/login', login)
 app.post('/register', register)
+app.get('/users', getAllUsers)
 
 // ----------PRAYER ENDPOINTS------------
-app.get('/prayers/rosary', getRosary)
-app.get('/prayers/daily', getDailyPrayers)
+app.get('/prayers/type/:type', getPrayersByType)
+app.get('/prayers/id/:id', getPrayersByID)
+app.get('/prayers/category/:category', getPrayersByCategory)
+app.get('/prayers/day/:day', getPrayersByDay)
+app.get('/prayers', getAllPrayers)
 
 
 
