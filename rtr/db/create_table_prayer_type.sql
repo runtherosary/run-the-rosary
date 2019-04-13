@@ -1,4 +1,4 @@
-create table prayer_type (
-id serial primary key
-, prayer_type text 
+CREATE TABLE prayer_type (
+id SERIAL PRIMARY KEY
+, prayer_type TEXT
 );

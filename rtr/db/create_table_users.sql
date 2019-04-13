@@ -1,10 +1,10 @@
-create table users (
-id SERIAL primary key
-, first_name text
-, last_name text
-, email text
-, password text
+CREATE TABLE users (
+id SERIAL PRIMARY KEY
+, first_name TEXT
+, last_name TEXT
+, email TEXT
+, password TEXT
 , created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 , updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
-, is_paid boolean default false
+, is_paid BOOLEAN default false
 );

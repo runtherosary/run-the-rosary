@@ -1,4 +1,4 @@
-create table prayer_mystery_category (
-id serial primary key
-, category_name text
+CREATE TABLE prayer_mystery_category (
+id SERIAL PRIMARY KEY
+, category_name TEXT
 );
