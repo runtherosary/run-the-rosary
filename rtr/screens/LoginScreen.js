@@ -1,33 +1,95 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
+import {AsyncStorage} from 'react-native';
 import { Button } from 'react-native-elements';
 import { ExpoLinksView } from '@expo/samples';
 import background from '../assets/images/login-background.jpg';
 import Icon from 'react-native-vector-icons/AntDesign';
 import colors from '../constants/Colors';
+import {connect }from 'react-redux';
+import {login, register} from "../ducks/reducers/userReducer";
+import axios from 'axios';
 
 import { height, width } from '../constants/Layout';
 
-export default class LoginScreen extends React.Component {
+class LoginScreen extends React.Component {
 	state = {
         secure: true,
         confirmSecure: true,
-        register: false,
+        signUp: false,
         invalidConfirm: false,
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        firstName: '',
+        lastName: '',
+        user: []
 	};
 
 	static navigationOptions = {
 		header: null,
 		footer: null,
     };
-    
 
+        componentDidMount = async () => {
+            // let {getAllUsers} = this.props;
+            // await getAllUsers();
+    
+            // await AsyncStorage.setItem('user', this.state.name);
+    
+            // await AsyncStorage.getItem('user').then(res => {
+            //     console.warn("Splash 32", res);
+            //     this.setState({user:res})
+            // }).catch(err => console.warn(err ));
+    
+            var userExists = await AsyncStorage.getItem('user');
+            
+            if (userExists) {
+                console.warn(userExists);
+                let {email, password} = userExists;
+                this.setState({email, password});
+            } else {
+                userExists = []
+            }
+        }
+    // };
+    
+ authenticate = async () => {
+        let { email, password, firstName, lastName, signUp } = this.state;
+        let { login, register } = this.props;
+
+        const credentials = {
+            email,
+            password
+        }
+        const registerCredentials = {
+            firstName,
+            lastName,
+            email,
+            password
+        }
+        if (!signUp) {
+        await login(credentials); 
+        AsyncStorage.setItem("user", credentials).then(res => {
+            // this.props.navigation.navigate("Home");
+            console.warn("Login 62: ", res); 
+        }).catch(err => {
+            console.warn("error: ", err)
+        })
+    } else {
+        await register(registerCredentials);
+        AsyncStorage.setItem("user", credentials).then(res => {
+            // this.props.navigation.navigate("Home");
+            console.warn("Login Register 70:", res);
+        }).catch(err => {
+            console.warn("error: ", err)
+        })
+    }
+    }
 
 	render() {
-		let { secure, register, invalidConfirm, password, confirmPassword } = this.state;
+        let { secure, signUp, invalidConfirm, password, confirmPassword,email, firstName, lastName} = this.state;
+        let {login, register} = this.props;
         const back = <Icon name='arrowleft' size={30} color='#fff' />;
         const submit = <Icon name='arrowright' size={30} color='#fff' />;
 		return (
@@ -43,7 +105,7 @@ export default class LoginScreen extends React.Component {
 
 				<View style={styles.loginContainer}>
 					<View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={styles.account}><Text style={register ? styles.account : styles.register} onPress={() => this.setState({register: !this.state.register})}>
+                        <Text style={styles.account}><Text style={signUp ? styles.account : styles.register} onPress={() => this.setState({signUp: !this.state.signUp})}>
                             Register
                         </Text> for a new account. 
                         </Text>
@@ -52,7 +114,7 @@ export default class LoginScreen extends React.Component {
 						<TextInput
 							onChangeText={(text) => this.setState({ username: text })}
 							style={styles.input}
-							//   value={!this.state.username ? null : this.state.username}
+							  value={email ? email : null}
 							placeholder='Email'
 							autoCapitalize='none'
 							placeholderTextColor='white'
@@ -64,7 +126,7 @@ export default class LoginScreen extends React.Component {
 						<TextInput
 							onChangeText={(text) => this.setState({ password: text })}
 							style={styles.passwordInput}
-							//   value={!this.state.password ? null : this.state.password}
+							value={password ? password : null}
                             placeholder='Password'
                             selectionColor='white'
 							autoCapitalize='none'
@@ -82,13 +144,23 @@ export default class LoginScreen extends React.Component {
                         )}
 					</TouchableOpacity>
 
-                      {register ? (
+                    {signUp ? null : (
+                        <TouchableOpacity onPress={() => {
+                                this.authenticate();
+                                this.props.navigation.navigate('Home')
+                            }}
+                        style={{justifyContent: 'center', alignItems: 'center'}} >
+                            {submit}
+                        </TouchableOpacity>
+                    )}
+
+                      {signUp ? (
                           <View>
                                 <TouchableHighlight>
 						            <TextInput
 							onChangeText={(text) => this.setState({ confirmPassword: text })}
 							style={[styles.passwordInput, {marginTop: 20}]}
-                            //   value={!this.state.password ? null : this.state.password}
+                            value={confirmPassword ? confirmPassword : null}
                             placeholder='Confirm Password'
                             selectionColor='white'
                             
@@ -105,7 +177,7 @@ export default class LoginScreen extends React.Component {
                             onChangeText={(text) => this.setState({firstName: text})}
                             style={styles.input}
                             selectionColor='white'
-
+                            value={firstName ? firstName : null}
                             placeholder='First Name'
                             autoCapitalize="none"
                             placeholderTextColor="white"
@@ -114,9 +186,9 @@ export default class LoginScreen extends React.Component {
                     <TouchableHighlight>
                         <TextInput 
                             onChangeText={(text) => this.setState({lastName: text})}
+                            value={lastName ? lastName : null}
                             style={styles.input}
                             selectionColor='white'
-
                             placeholder='Last Name'
                             autoCapitalize="none"
                             placeholderTextColor="white"
@@ -126,7 +198,7 @@ export default class LoginScreen extends React.Component {
                         if (confirmPassword !== password) {
                             this.setState({invalidConfirm:true})
                         } else {
-                            // send REGISTER data here !!
+                            this.authenticate();
                             this.props.navigation.navigate('Home')
                         }
                         }} style={{justifyContent: 'center', alignItems: 'center'}} >
@@ -213,3 +285,11 @@ const styles = StyleSheet.create({
         opacity: 0
     }
 });
+
+const mapStateToProps = state => {
+    return {
+        user: state.userReducer.user
+    }
+}
+
+export default connect(mapStateToProps, {login, register})(LoginScreen);

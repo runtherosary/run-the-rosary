@@ -1,14 +1,19 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
+import {AsyncStorage} from 'react-native';
 import { Button } from 'react-native-elements';
 import { height, width } from '../constants/Layout';
 import GetStarted from '../components/modals/GetStarted';
 import background from '../assets/images/splash-background.jpg';
 import colors from '../constants/Colors';
+import {connect} from "react-redux";
+import {getAllUsers} from "../ducks/reducers/userReducer";
 
-export default class SplashScreen extends React.Component {
+
+class SplashScreen extends React.Component {
 	state = {
-		user: true,
+        user: {},
+        name: 'wick'
 	};
 
 	static navigationOptions = {
@@ -18,7 +23,7 @@ export default class SplashScreen extends React.Component {
 	getStarted = () => {
 		this.props.navigation.navigate('Home');
 		// We'll need to add some logic to conditionally navigate based on if its a new user visiting or an existing user
-	};
+    };
 
 	render() {
 		return (
@@ -31,7 +36,7 @@ export default class SplashScreen extends React.Component {
 
 					<TouchableOpacity
 						style={{ flex: 1, justifyContent: 'flex-end', marginBottom: 300 }}
-						onPress={() => this.props.navigation.navigate('Home')}>
+						onPress={() => this.props.navigation.navigate('Login')}>
 						<Text style={styles.start}>START</Text>
 					</TouchableOpacity>
 				</ScrollView>
@@ -65,3 +70,12 @@ const styles = StyleSheet.create({
 		// fontWeight: 'bold',
 	},
 });
+
+const mapStateToProps = state => {
+    return {
+        users: state.userReducer.users,
+        user: state.userReducer.users
+    }
+}
+
+export default connect(mapStateToProps, {getAllUsers})(SplashScreen);
