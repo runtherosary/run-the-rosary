@@ -70,9 +70,9 @@ export default class SplashScreen extends React.Component {
             </View>
           </ScrollView>
         ) : (
-          <GetStarted getStarted={this.getStarted} />
-          //   If it isn't the user's first time on the app then they don't need this FYI
-        )}
+            <GetStarted getStarted={this.getStarted} />
+            //   If it isn't the user's first time on the app then they don't need this FYI
+          )}
       </ImageBackground>
     );
   }

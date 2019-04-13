@@ -11,60 +11,60 @@ const REGISTER_USER = 'REGISTER_USER'
 const GET_PRAYERS = 'GET_PRAYERS'
 
 
-export default function(state = initialState, action){
+export default function (state = initialState, action) {
   switch (action.type) {
     case `${REGISTER_USER}_FULFILLED`:
-      return{
+      return {
         ...state,
         user: action.payload.data
       }
     case `${REGISTER_USER}_PENDING`:
-      return{
+      return {
         ...state,
         isLoading: true
       }
     case `${LOGIN}_FULFILLED`:
-      return{
+      return {
         ...state,
         user: action.payload.data
       }
     case `${LOGIN}_PENDING`:
-      return{
+      return {
         ...state,
         isLoading: true
       }
     case `${GET_PRAYERS}_FULFILLED`:
-      return{
+      return {
         ...state,
         prayers: action.payload.data
       }
     case `${GET_PRAYERS}_PENDING`:
-      return{
+      return {
         ...state,
         isLoading: true
       }
-      
+
     default:
       return state
   }
 }
 
-export function register(firstName, lastName, email, password){
-  return{
+export function register(firstName, lastName, email, password) {
+  return {
     type: REGISTER_USER,
-    payload: axios.post('/register', {firstName, lastName, email, password})
+    payload: axios.post('/register', { firstName, lastName, email, password })
   }
 }
 
-export function login(email, password){
-  return{
+export function login(email, password) {
+  return {
     type: LOGIN,
-    payload: axios('/login', {email, password})
+    payload: axios('/login', { email, password })
   }
 }
 
-export function getPrayers(type){
-  return{
+export function getPrayers(type) {
+  return {
     type: GET_PRAYERS,
     payload: axios(`/prayers/${type}`)
   }
