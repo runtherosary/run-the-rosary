@@ -13,13 +13,13 @@ massive(process.env.CONNECTION_STRING)
   })
   .catch(err => console.log("Massive", err));
 
-//----------USER ENDPOINTS------------
-// app.post('/login', login)
-// app.post('/register', register)
+// ----------USER ENDPOINTS------------
+app.post('/login', login)
+app.post('/register', register)
 
-//----------PRAYER ENDPOINTS------------
-// app.get('/prayers/rosary', getRosary)
-// app.get('/prayers/daily', getDailyPrayers)
+// ----------PRAYER ENDPOINTS------------
+app.get('/prayers/rosary', getRosary)
+app.get('/prayers/daily', getDailyPrayers)
 
 
 
