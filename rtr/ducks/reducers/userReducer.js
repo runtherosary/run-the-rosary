@@ -12,61 +12,63 @@ const REGISTER_USER = 'REGISTER_USER'
 const GET_ALL_USERS = 'GET_ALL_USERS'
 
 
-export default function(state = initialState, action){
+export default function (state = initialState, action) {
   switch (action.type) {
     case `${REGISTER_USER}_FULFILLED`:
-      return{
+      return {
         ...state,
         user: action.payload.data
       }
     case `${REGISTER_USER}_PENDING`:
-      return{
+      return {
         ...state,
         isLoading: true
       }
     case `${LOGIN}_FULFILLED`:
-      return{
+      return {
         ...state,
         user: action.payload.data
       }
     case `${LOGIN}_PENDING`:
-      return{
+      return {
         ...state,
         isLoading: true
       }
+
     case `${GET_ALL_USERS}_FULFILLED`:
-    
-      return{
+
+      return {
         ...state,
         users: action.payload.data
       }
+
     case `${GET_ALL_USERS}_PENDING`:
-      return{
+      return {
         ...state,
         isLoading: true
       }
-      
+
     default:
       return state
   }
 }
 
-export function register(firstName, lastName, email, password){
-  return{
+export function register(firstName, lastName, email, password) {
+  return {
     type: REGISTER_USER,
-    payload: axios.post('http://localhost:3001/register', {firstName, lastName, email, password})
+    payload: axios.post('http://localhost:3001/register', { firstName, lastName, email, password })
   }
 }
 
-export function login(email, password){
-  return{
+export function login(email, password) {
+  return {
     type: LOGIN,
-    payload: axios.post('http://localhost:3001/login', {email, password})
+    payload: axios.post('http://localhost:3001/login', { email, password })
   }
 }
 
-export function getAllUsers(){
-  return{
+export function getAllUsers() {
+  return {
     type: GET_ALL_USERS,
     payload: axios.get('http://localhost:3001/users')
   }
