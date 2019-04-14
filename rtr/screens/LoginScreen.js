@@ -1,14 +1,11 @@
 import React from 'react';
 import {ScrollView, StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground} from 'react-native';
 import {AsyncStorage} from 'react-native';
-import {Button} from 'react-native-elements';
-import {ExpoLinksView} from '@expo/samples';
 import background from '../assets/images/login-background.jpg';
 import Icon from 'react-native-vector-icons/AntDesign';
 import colors from '../constants/Colors';
 import {connect} from 'react-redux';
 import {login, register} from '../ducks/reducers/userReducer';
-import axios from 'axios';
 
 import {height, width} from '../constants/Layout';
 
@@ -18,7 +15,7 @@ class LoginScreen extends React.Component {
     confirmSecure: true,
     signUp: false,
     invalidConfirm: false,
-    email: 'email@email.com',
+    email: '',
     password: '',
     confirmPassword: '',
     firstName: '',
@@ -65,26 +62,23 @@ class LoginScreen extends React.Component {
       email,
       password,
     };
+
     if (!signUp) {
-      await login(credentials);
-      AsyncStorage.setItem('user', credentials)
-        .then(res => {
-          // this.props.navigation.navigate("Home");
-          console.warn('Login 62: ', res);
-        })
-        .catch(err => {
-          console.warn('error: ', err);
-        });
+      login(credentials);
+      // AsyncStorage.setItem("user", credentials).then(res => {
+      //     this.props.navigation.navigate("Home");
+      //     console.warn("Login 62: ", res);
+      // }).catch(err => {
+      //     console.warn("error: ", err)
+      // })
     } else {
-      await register(registerCredentials);
-      AsyncStorage.setItem('user', credentials)
-        .then(res => {
-          // this.props.navigation.navigate("Home");
-          console.warn('Login Register 70:', res);
-        })
-        .catch(err => {
-          console.warn('error: ', err);
-        });
+      register(registerCredentials);
+      // AsyncStorage.setItem("user", credentials).then(res => {
+      //     this.props.navigation.navigate("Home");
+      //     console.warn("Login Register 70:", res);
+      // }).catch(err => {
+      //     console.warn("error: ", err)
+      // })
     }
   };
 
@@ -109,7 +103,7 @@ class LoginScreen extends React.Component {
             <Text style={styles.account}>
               <Text style={signUp ? styles.account : styles.register} onPress={() => this.setState({signUp: !this.state.signUp})}>
                 Register
-              </Text>{' '}
+              </Text>
               for a new account.
             </Text>
           </View>
