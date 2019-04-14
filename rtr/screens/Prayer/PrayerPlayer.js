@@ -12,7 +12,7 @@ import { height, width } from "../../constants/Layout";
 import colors from "../../constants/Colors";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Icon2 from "react-native-vector-icons/Ionicons";
-import Video from "../../node_modules/react-native-video";
+// import Video from "../../node_modules/react-native-video";
 
 export default class PrayerPlayer extends React.Component {
   state = {
@@ -30,7 +30,7 @@ export default class PrayerPlayer extends React.Component {
     return (
       <ImageBackground style={{ flex: 1 }}>
         <Text style={styles.title}>Audio Player</Text>
-        <Video
+        {/* <Video
           ref={ref => {
             this.player = ref;
           }}
@@ -38,7 +38,7 @@ export default class PrayerPlayer extends React.Component {
           onError={this.videoError}
           source={{ uri: "background" }}
           style={styles.backgroundVideo}
-        />
+        /> */}
       </ImageBackground>
     );
   }
