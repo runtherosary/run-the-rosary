@@ -5,6 +5,7 @@ const initialState = {
   prayersLoading: false,
 };
 
+
 const GET_PRAYERS_BY_TYPE = 'GET_PRAYERS_BY_TYPE';
 const GET_PRAYERS_BY_ID = 'GET_PRAYERS_BY_ID';
 const GET_PRAYERS_BY_DAY = 'GET_PRAYERS_BY_DAY';
