@@ -1,3 +1,7 @@
-SELECT *
-FROM prayers
-WHERE id = $1;
+SELECT
+  *
+FROM
+  prayers
+WHERE
+  id = $1;
+
