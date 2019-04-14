@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const initialState = {
   prayers: [],
+  selectedPrayers: [],
   prayersLoading: false,
 };
 
