@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 
 //Takes in string email & string password
 async function login(req, res){
+  console.log(req.body)
   const db = req.app.get('db')
   try {
     let user = await db.get_user(req.body.email)
@@ -12,13 +13,13 @@ async function login(req, res){
      res.status(404).send(console.log("Email not registered"))
     }
   } catch (error) {
-    console.log(error)
-    return res.sendStatus(500)
+    return res.status(500).send(error)
   }
 }
 
 //Takes in string email, string password, string firstName, string lastName, & string password
 async function register(req, res){
+  console.log(req.body)
   const db = req.app.get('db')
   let { email, firstName, lastName } = req.body
   try {

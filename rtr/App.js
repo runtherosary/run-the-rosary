@@ -15,9 +15,9 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <View style={styles.container}>
-            <AudioPlayer />
-            {/* {Platform.OS === 'ios' && <StatusBar barStyle="default" />} */}
-            {/* <AppNavigator /> */}
+            {/* <AudioPlayer /> */}
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
           </View>
         </Provider>
       );

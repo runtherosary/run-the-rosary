@@ -34,6 +34,12 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: true
       }
+    case `${LOGIN}_REJECTED`:
+    console.log(action.payload)
+      return {
+        ...state,
+        isLoading: false
+      }
 
     case `${GET_ALL_USERS}_FULFILLED`:
 
@@ -53,14 +59,14 @@ export default function (state = initialState, action) {
   }
 }
 
-export function register(firstName, lastName, email, password) {
+export function register({firstName, lastName, email, password}) {
   return {
     type: REGISTER_USER,
     payload: axios.post('http://localhost:3001/register', { firstName, lastName, email, password })
   }
 }
 
-export function login(email, password) {
+export function login({email, password}) {
   return {
     type: LOGIN,
     payload: axios.post('http://localhost:3001/login', { email, password })
