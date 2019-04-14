@@ -1,108 +1,125 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const initialState = {
   prayers: [],
-  prayersLoading: false
-}
+  prayersLoading: false,
+};
 
-const GET_PRAYERS_BY_TYPE = 'GET_PRAYERS_BY_TYPE'
-const GET_PRAYERS_BY_ID = 'GET_PRAYERS_BY_ID'
-const GET_PRAYERS_BY_DAY = 'GET_PRAYERS_BY_DAY'
-const GET_PRAYERS_BY_CATEGORY = 'GET_PRAYERS_BY_CATEGORY'
-const GET_ALL_PRAYERS = 'GET_ALL_PRAYERS'
+const GET_PRAYERS_BY_TYPE = 'GET_PRAYERS_BY_TYPE';
+const GET_PRAYERS_BY_ID = 'GET_PRAYERS_BY_ID';
+const GET_PRAYERS_BY_DAY = 'GET_PRAYERS_BY_DAY';
+const GET_PRAYERS_BY_CATEGORY = 'GET_PRAYERS_BY_CATEGORY';
+const GET_ALL_PRAYERS = 'GET_ALL_PRAYERS';
+const SELECT_PRAYER = 'SELECT_PRAYER';
 
-
-export default function(state = initialState, action){
+export default function(state = initialState, action) {
   switch (action.type) {
     case `${GET_PRAYERS_BY_TYPE}_FULFILLED`:
-      return{
+      let prayers = action.payload.data.map(e => {
+        return {...e, selected: false};
+      });
+      return {
         ...state,
         prayersLoading: false,
-        prayers: action.payload.data
-      }
+        prayers,
+      };
     case `${GET_PRAYERS_BY_TYPE}_PENDING`:
-      return{
+      return {
         ...state,
-        prayersLoading: true
-      }
+        prayersLoading: true,
+      };
     case `${GET_PRAYERS_BY_ID}_FULFILLED`:
-      return{
+      return {
         ...state,
         prayersLoading: false,
-        prayers: action.payload.data
-      }
+        prayers: action.payload.data,
+      };
     case `${GET_PRAYERS_BY_ID}_PENDING`:
-      return{
+      return {
         ...state,
-        prayersLoading: true
-      }
+        prayersLoading: true,
+      };
     case `${GET_PRAYERS_BY_DAY}_FULFILLED`:
-      return{
+      return {
         ...state,
         prayersLoading: false,
-        prayers: action.payload.data
-      }
+        prayers: action.payload.data,
+      };
     case `${GET_PRAYERS_BY_DAY}_PENDING`:
-      return{
+      return {
         ...state,
-        prayersLoading: true
-      }
+        prayersLoading: true,
+      };
     case `${GET_PRAYERS_BY_CATEGORY}_FULFILLED`:
-      return{
+      return {
         ...state,
         prayersLoading: false,
-        prayers: action.payload.data
-      }
+        prayers: action.payload.data,
+      };
     case `${GET_PRAYERS_BY_CATEGORY}_PENDING`:
-      return{
+      return {
         ...state,
-        prayersLoading: true
-      }
+        prayersLoading: true,
+      };
     case `${GET_ALL_PRAYERS}_FULFILLED`:
-      return{
+      return {
         ...state,
         prayersLoading: false,
-        prayers: action.payload.data
-      }
+        prayers: action.payload.data,
+      };
     case `${GET_ALL_PRAYERS}_PENDING`:
-      return{
+      return {
         ...state,
-        prayersLoading: true
-      }
-      
+        prayersLoading: true,
+      };
+    case `${SELECT_PRAYER}`:
+      let tempPrayers = state.prayers.slice();
+      tempPrayers[action.payload.index].selected = !tempPrayers[action.payload.index].selected;
+      return {
+        ...state,
+        prayers: tempPrayers,
+      };
     default:
-      return state
+      return state;
   }
 }
 
-
-export function getPrayersByType(type){
-  return{
+export function getPrayersByType(type) {
+  return {
     type: GET_PRAYERS_BY_TYPE,
-    payload: axios(`/prayers/type/${type}`)
-  }
+    payload: axios(`http://localhost:3001/prayers/type/${type}`),
+  };
 }
-export function getPrayersByID(id){
-  return{
+export function getPrayersByID(id) {
+  return {
     type: GET_PRAYERS_BY_ID,
-    payload: axios(`/prayers/id/${id}`)
-  }
+    payload: axios(`/prayers/id/${id}`),
+  };
 }
-export function getPrayersByDay(day){
-  return{
+export function getPrayersByDay(day) {
+  return {
     type: GET_PRAYERS_BY_DAY,
-    payload: axios(`/prayers/day/${day}`)
-  }
+    payload: axios(`/prayers/day/${day}`),
+  };
 }
-export function getPrayersByCategory(category){
-  return{
+export function getPrayersByCategory(category) {
+  return {
     type: GET_PRAYERS_BY_CATEGORY,
-    payload: axios(`/prayers/category/${category}`)
-  }
+    payload: axios(`/prayers/category/${category}`),
+  };
 }
-export function getAllPrayers(){
-  return{
+export function getAllPrayers() {
+  return {
     type: GET_PRAYERS_BY_CATEGORY,
-    payload: axios(`/prayers`)
-  }
+    payload: axios(`/prayers`),
+  };
+}
+export function selectPrayer(prayer, index) {
+  return {
+    type: SELECT_PRAYER,
+    payload: {
+      prayer,
+      index,
+    },
+  };
 }
