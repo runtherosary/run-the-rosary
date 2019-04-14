@@ -21,27 +21,7 @@ export default class HomeScreen extends React.Component {
 							alignContent: 'center',
 							justifyContent: 'center',
 						}}>
-						<Button
-							title='Splash'
-							onPress={() => this.props.navigation.navigate('Splash')}
-							buttonStyle={{
-								marginVertical: height / 50,
-								marginHorizontal: width / 7,
-								height: 10,
-								width: 20,
-							}}
-						/>
 
-						<Button
-							title='Login'
-							onPress={() => this.props.navigation.navigate('Login')}
-							buttonStyle={{
-								marginVertical: height / 50,
-								marginHorizontal: width / 7,
-								height: 100,
-								width: 200,
-							}}
-						/>
 
 						<View
 							style={{
@@ -63,7 +43,7 @@ export default class HomeScreen extends React.Component {
 
 							<Button
 								title='Prayer'
-								onPress={() => this.props.navigation.navigate('PrayerSplash')}
+								onPress={() => this.props.navigation.navigate('PrayerList')}
 								buttonStyle={{
 									marginVertical: height / 12,
 									marginHorizontal: 5,
