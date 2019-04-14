@@ -10,15 +10,17 @@ const GET_PRAYERS_BY_ID = 'GET_PRAYERS_BY_ID'
 const GET_PRAYERS_BY_DAY = 'GET_PRAYERS_BY_DAY'
 const GET_PRAYERS_BY_CATEGORY = 'GET_PRAYERS_BY_CATEGORY'
 const GET_ALL_PRAYERS = 'GET_ALL_PRAYERS'
+const SELECT_PRAYER = 'SELECT_PRAYER'
 
 
 export default function(state = initialState, action){
   switch (action.type) {
     case `${GET_PRAYERS_BY_TYPE}_FULFILLED`:
+    let prayers = action.payload.data.map(e =>{return {...e, selected: false}})
       return{
         ...state,
         prayersLoading: false,
-        prayers: action.payload.data
+        prayers
       }
     case `${GET_PRAYERS_BY_TYPE}_PENDING`:
       return{
@@ -69,7 +71,13 @@ export default function(state = initialState, action){
         ...state,
         prayersLoading: true
       }
-      
+    case `${SELECT_PRAYER}`:
+    let tempPrayers = state.prayers.slice()
+    tempPrayers[action.payload.index].selected = !tempPrayers[action.payload.index].selected
+      return{
+        ...state,
+        prayers: tempPrayers
+      }
     default:
       return state
   }
@@ -104,5 +112,15 @@ export function getAllPrayers(){
   return{
     type: GET_PRAYERS_BY_CATEGORY,
     payload: axios(`/prayers`)
+  }
+}
+
+export function selectPrayer(prayer, index){
+  return{
+    type: SELECT_PRAYER,
+    payload: {
+      prayer,
+      index
+    }
   }
 }
