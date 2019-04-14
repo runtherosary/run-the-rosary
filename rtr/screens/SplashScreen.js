@@ -3,12 +3,15 @@ import { StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity }
 import { AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
 import { height, width } from '../constants/Layout';
-import GetStarted from '../components/modals/GetStarted';
+// import GetStarted from '../components/modals/GetStarted';
 import background from '../assets/images/splash-background.jpg';
+import greentrail from "../assets/images/greentrail.jpg";
+import mountain from "../assets/images/mountain.jpg";
+
 import colors from '../constants/Colors';
 import { connect } from "react-redux";
 import { getAllUsers } from "../ducks/reducers/userReducer";
-
+import Carousel from "../components/Carousel/Carousel"
 
 class SplashScreen extends React.Component {
   state = {
@@ -27,7 +30,7 @@ class SplashScreen extends React.Component {
 
   render() {
     return (
-      <ImageBackground source={background} style={{ flex: 1 }}>
+      <ImageBackground source={mountain} style={{ flex: 1 }}>
         {/* {!this.state.user ? ( */}
         <ScrollView contentContainerStyle={styles.container}>
           <View style={{ flex: 1, width, marginTop: 40 }}>
@@ -71,11 +74,8 @@ class SplashScreen extends React.Component {
             />
           </View>
         </ScrollView>
-        {/* ) : (
-          <Carousel carousel={this.carousel} />
-          <GetStarted getStarted={this.getStarted} />
-          //   If it isn't the user's first time on the app then they don't need this FYI
-        )} */}
+        {/* <Carousel carousel={this.carousel} /> */}
+
       </ImageBackground>
     );
   }
@@ -94,13 +94,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 50
   },
   title: {
+    fontFamily: 'Avenir Next',
+    fontWeight: "500",
     textShadowColor: 'gray',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 2,
     textAlign: 'center',
     color: 'white',
     fontSize: 40,
-    marginTop: 200,
+    marginTop: 215,
     marginBottom: 40
   },
 

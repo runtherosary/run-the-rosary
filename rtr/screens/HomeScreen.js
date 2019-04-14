@@ -11,7 +11,7 @@ export default class HomeScreen extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<Text style={styles.title}>Home Screen</Text>
+				<Text style={styles.title}>Run The Rosary</Text>
 
 				<ScrollView>
 					<View
@@ -84,13 +84,16 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	title: {
-		textShadowColor: 'black',
+		fontFamily: 'Avenir Next',
+		fontWeight: "500",
+		textShadowColor: 'gray',
 		textShadowOffset: { width: -1, height: 1 },
-		textShadowRadius: 8,
+		textShadowRadius: 2,
 		textAlign: 'center',
 		color: 'white',
-		fontSize: 70,
-		marginTop: 70,
+		fontSize: 40,
+		marginTop: 150,
+		marginBottom: 40
 	},
 	home: {
 		margin: 20,
