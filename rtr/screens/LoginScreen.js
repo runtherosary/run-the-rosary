@@ -15,6 +15,7 @@ class LoginScreen extends React.Component {
     confirmSecure: true,
     signUp: false,
     invalidConfirm: false,
+    missingField: false,
     email: '',
     password: '',
     confirmPassword: '',
@@ -74,7 +75,7 @@ class LoginScreen extends React.Component {
   };
 
   render() {
-    let {secure, signUp, invalidConfirm, password, confirmPassword, email, firstName, lastName, loginError} = this.state;
+    let {secure, signUp, invalidConfirm, missingField, password, confirmPassword, email, firstName, lastName, loginError} = this.state;
     let {login, register} = this.props;
     const back = <Icon name='arrowleft' size={30} color='#fff' />;
     const submit = <Icon name='arrowright' size={30} color='#fff' />;
@@ -92,7 +93,7 @@ class LoginScreen extends React.Component {
         <View style={styles.loginContainer}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Text style={styles.account}>
-              <Text style={signUp ? styles.account : styles.register} onPress={() => this.setState({signUp: !this.state.signUp})}>
+              <Text style={signUp ? styles.account : styles.register} onPress={() => this.setState({signUp: !this.state.signUp, missingField: false})}>
                 Register
               </Text>{' '}
               for a new account.
@@ -101,7 +102,7 @@ class LoginScreen extends React.Component {
           </View>
           <TouchableHighlight>
             <TextInput
-              onChangeText={text => this.setState({username: text})}
+              onChangeText={text => this.setState({email: text})}
               style={styles.input}
               value={email ? email : null}
               placeholder='Email'
@@ -128,18 +129,7 @@ class LoginScreen extends React.Component {
             style={{justifyContent: 'center', alignItems: 'center'}}>
             {secure ? <Text style={styles.show}>Show Password</Text> : <Text style={styles.hide}>Hide Password</Text>}
           </TouchableOpacity>
-
-          {signUp ? null : (
-            <TouchableOpacity
-              onPress={() => {
-                this.authenticate();
-                this.props.navigation.navigate('Home');
-              }}
-              style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
-              {submit}
-            </TouchableOpacity>
-          )}
-
+            
           {signUp ? (
             <View>
               <TouchableHighlight>
@@ -181,18 +171,36 @@ class LoginScreen extends React.Component {
               </TouchableHighlight>
               <TouchableOpacity
                 onPress={() => {
-                  if (confirmPassword !== password) {
-                    this.setState({invalidConfirm: true});
+                    if(!firstName || !lastName || !email || !password){
+                        this.setState({missingField: true})
+                  } else if (confirmPassword !== password) {
+                        this.setState({invalidConfirm: true});
                   } else {
-                    this.authenticate();
-                    this.props.navigation.navigate('Home');
+                        this.authenticate();
+                        this.props.navigation.navigate('Home');
                   }
                 }}
                 style={{justifyContent: 'center', alignItems: 'center', marginTop: 30}}>
                 {submit}
               </TouchableOpacity>
+              {missingField && <Text style={styles.invalid}>All fields are required.</Text>}
             </View>
-          ) : null}
+          ) : 
+          <View>
+                {missingField && <Text style={styles.invalid}>All fields are required.</Text>}
+                <TouchableOpacity
+                onPress={() => {
+                    if(!email || !password){
+                        this.setState({missingField: true})
+                    }else{
+                        this.authenticate();
+                        this.props.navigation.navigate('Home');
+                    }
+                }}
+                style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                {submit}
+            </TouchableOpacity>
+            </View>}
         </View>
       </ImageBackground>
     );
