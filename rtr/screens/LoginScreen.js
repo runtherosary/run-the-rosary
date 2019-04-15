@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground} from 'react-native';
+import {StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground} from 'react-native';
 import {AsyncStorage} from 'react-native';
 import background from '../assets/images/login-background.jpg';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -7,7 +7,7 @@ import colors from '../constants/Colors';
 import {connect} from 'react-redux';
 import {login, register} from '../ducks/reducers/userReducer';
 
-import {height, width} from '../constants/Layout';
+import {width} from '../constants/Layout';
 
 class LoginScreen extends React.Component {
   state = {
@@ -21,6 +21,7 @@ class LoginScreen extends React.Component {
     firstName: '',
     lastName: '',
     user: [],
+    loginError: false,
   };
 
   static navigationOptions = {
@@ -29,23 +30,7 @@ class LoginScreen extends React.Component {
   };
 
   componentDidMount = async () => {
-    // console.log("Current User: ", this.props.user)
-
     await AsyncStorage.setItem('user', this.state.email);
-    const user = await AsyncStorage.getItem('user');
-    // console.log('User: ', user);
-
-    // var userExists = await AsyncStorage.getItem('user');
-    // var async = await AsyncStorage.getAllKeys();
-    // console.log("Async: ", async)
-
-    // if (userExists) {
-    //     console.log("User: ", userExists)
-    //     let {email, password} = userExists;
-    //     this.setState({email, password});
-    // } else {
-    //     userExists = []
-    // }
   };
 
   authenticate = async () => {
@@ -65,25 +50,31 @@ class LoginScreen extends React.Component {
 
     if (!signUp) {
       login(credentials);
-      // AsyncStorage.setItem("user", credentials).then(res => {
-      //     this.props.navigation.navigate("Home");
-      //     console.warn("Login 62: ", res);
-      // }).catch(err => {
-      //     console.warn("error: ", err)
-      // })
+      //   AsyncStorage.setItem('user', credentials)
+      //     .then(res => {
+      //       this.props.navigation.navigate('Home');
+      //     })
+      //     .catch(err => {
+      //       if (err) {
+      //         this.setState({loginError: true});
+      //       }
+      //     });
     } else {
       register(registerCredentials);
-      // AsyncStorage.setItem("user", credentials).then(res => {
-      //     this.props.navigation.navigate("Home");
-      //     console.warn("Login Register 70:", res);
-      // }).catch(err => {
-      //     console.warn("error: ", err)
-      // })
+      //   AsyncStorage.setItem('user', credentials)
+      //     .then(res => {
+      //       this.props.navigation.navigate('Home');
+      //     })
+      //     .catch(err => {
+      //       if (err) {
+      //         this.setState({loginError: true});
+      //       }
+      //     });
     }
   };
 
   render() {
-    let {secure, signUp, invalidConfirm, password, confirmPassword, email, firstName, lastName} = this.state;
+    let {secure, signUp, invalidConfirm, password, confirmPassword, email, firstName, lastName, loginError} = this.state;
     let {login, register} = this.props;
     const back = <Icon name='arrowleft' size={30} color='#fff' />;
     const submit = <Icon name='arrowright' size={30} color='#fff' />;
@@ -103,9 +94,10 @@ class LoginScreen extends React.Component {
             <Text style={styles.account}>
               <Text style={signUp ? styles.account : styles.register} onPress={() => this.setState({signUp: !this.state.signUp})}>
                 Register
-              </Text>
+              </Text>{' '}
               for a new account.
             </Text>
+            {loginError ? <Text style={styles.invalid}>There was an error signing in.</Text> : null}
           </View>
           <TouchableHighlight>
             <TextInput
