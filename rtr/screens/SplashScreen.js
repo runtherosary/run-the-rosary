@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity }
 import { AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
 import { height, width } from '../constants/Layout';
-import GetStarted from '../components/modals/GetStarted';
 import background from '../assets/images/splash-background.jpg';
 import greentrail from "../assets/images/greentrail.jpg";
 import mountain from "../assets/images/mountain.jpg";
