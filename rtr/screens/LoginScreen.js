@@ -1,16 +1,11 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import { Button } from 'react-native-elements';
-import { ExpoLinksView } from '@expo/samples';
 import background from '../assets/images/login-background.jpg';
-import trail from "../assets/images/trail.jpg";
-import greentrail from "../assets/images/greentrail.jpg";
 import Icon from 'react-native-vector-icons/AntDesign';
 import colors from '../constants/Colors';
 import { connect } from 'react-redux';
-import { login, register } from "../ducks/reducers/userReducer";
-import axios from 'axios';
+import { login, register } from '../ducks/reducers/userReducer';
 
 import { width } from '../constants/Layout';
 
@@ -80,11 +75,12 @@ class LoginScreen extends React.Component {
     };
 
     render() {
-        let { secure, signUp, invalidConfirm, password, confirmPassword, email, firstName, lastName } = this.state;
+        let { secure, signUp, invalidConfirm, missingField, password, confirmPassword, email, firstName, lastName, loginError } = this.state;
+        let { login, register } = this.props;
         const back = <Icon name='arrowleft' size={30} color='#fff' />;
         const submit = <Icon name='arrowright' size={30} color='#fff' />;
         return (
-            <ImageBackground style={styles.container} source={greentrail}>
+            <ImageBackground style={styles.container} source={background}>
                 <View style={{ flex: 1, width: width, marginTop: 40 }}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Splash')} style={styles.back}>
                         {back}
@@ -96,17 +92,22 @@ class LoginScreen extends React.Component {
 
                 <View style={styles.loginContainer}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={styles.account}><Text style={signUp ? styles.account : styles.register} onPress={() => this.setState({ signUp: !this.state.signUp })}>
-                            Register
-                        </Text> for a new account.
-                        </Text>
+                        <Text style={styles.account}>
+                            <Text
+                                style={signUp ? styles.account : styles.register}
+                                onPress={() => this.setState({ signUp: !this.state.signUp, missingField: false })}>
+                                Register
+              </Text>{' '}
+                            for a new account.
+            </Text>
+                        {loginError && <Text style={styles.invalid}>There was an error signing in.</Text>}
                     </View>
                     <TouchableHighlight>
                         <TextInput
-                            onChangeText={(text) => this.setState({ email: text })}
+                            onChangeText={text => this.setState({ email: text })}
                             style={styles.input}
                             value={email ? email : null}
-                            placeholder='Email@email.com'
+                            placeholder='Email'
                             autoCapitalize='none'
                             placeholderTextColor='white'
                             placeholderTextFontWeight='bold'
@@ -115,7 +116,7 @@ class LoginScreen extends React.Component {
                     </TouchableHighlight>
                     <TouchableHighlight>
                         <TextInput
-                            onChangeText={(text) => this.setState({ password: text })}
+                            onChangeText={text => this.setState({ password: text })}
                             style={styles.passwordInput}
                             value={password ? password : null}
                             placeholder='Password'
@@ -128,28 +129,14 @@ class LoginScreen extends React.Component {
                     <TouchableOpacity
                         onPress={() => this.setState({ secure: !this.state.secure })}
                         style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        {secure ? (
-                            <Text style={styles.show}>Show Password</Text>
-                        ) : (
-                                <Text style={styles.hide}>Hide Password</Text>
-                            )}
+                        {secure ? <Text style={styles.show}>Show Password</Text> : <Text style={styles.hide}>Hide Password</Text>}
                     </TouchableOpacity>
-
-                    {signUp ? null : (
-                        <TouchableOpacity onPress={() => {
-                            this.authenticate();
-                            this.props.navigation.navigate('Home')
-                        }}
-                            style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }} >
-                            {submit}
-                        </TouchableOpacity>
-                    )}
 
                     {signUp ? (
                         <View>
                             <TouchableHighlight>
                                 <TextInput
-                                    onChangeText={(text) => this.setState({ confirmPassword: text })}
+                                    onChangeText={text => this.setState({ confirmPassword: text })}
                                     style={[styles.passwordInput, { marginTop: 20 }]}
                                     value={confirmPassword ? confirmPassword : null}
                                     placeholder='Confirm Password'
@@ -164,40 +151,60 @@ class LoginScreen extends React.Component {
 
                             <TouchableHighlight>
                                 <TextInput
-                                    onChangeText={(text) => this.setState({ firstName: text })}
+                                    onChangeText={text => this.setState({ firstName: text })}
                                     style={styles.input}
                                     selectionColor='white'
                                     value={firstName ? firstName : null}
                                     placeholder='First Name'
-                                    autoCapitalize="none"
-                                    placeholderTextColor="white"
+                                    autoCapitalize='none'
+                                    placeholderTextColor='white'
                                 />
                             </TouchableHighlight>
                             <TouchableHighlight>
                                 <TextInput
-                                    onChangeText={(text) => this.setState({ lastName: text })}
+                                    onChangeText={text => this.setState({ lastName: text })}
                                     value={lastName ? lastName : null}
                                     style={styles.input}
                                     selectionColor='white'
                                     placeholder='Last Name'
-                                    autoCapitalize="none"
-                                    placeholderTextColor="white"
+                                    autoCapitalize='none'
+                                    placeholderTextColor='white'
                                 />
                             </TouchableHighlight>
-                            <TouchableOpacity onPress={() => {
-                                if (confirmPassword !== password) {
-                                    this.setState({ invalidConfirm: true })
-                                } else {
-                                    this.authenticate();
-                                    this.props.navigation.navigate('Home')
-                                }
-                            }} style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }} >
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (!firstName || !lastName || !email || !password) {
+                                        this.setState({ missingField: true });
+                                    } else if (confirmPassword !== password) {
+                                        this.setState({ invalidConfirm: true });
+                                    } else {
+                                        this.authenticate();
+                                        this.props.navigation.navigate('Home');
+                                    }
+                                }}
+                                style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
                                 {submit}
                             </TouchableOpacity>
                         </View>
-                    ) : null}
+                    ) : (
+                            <View>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (!email || !password) {
+                                            this.setState({ missingField: true });
+                                        } else {
+                                            this.authenticate();
+                                            this.props.navigation.navigate('Home');
+                                        }
+                                    }}
+                                    style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
+                                    {submit}
+                                </TouchableOpacity>
+                            </View>
+                        )}
                 </View>
-            </ImageBackground >
+                <Text style={missingField ? [styles.invalid, { marginVertical: 30 }] : styles.invisible}>All fields are required.</Text>
+            </ImageBackground>
         );
     }
 }
@@ -237,30 +244,16 @@ const styles = StyleSheet.create({
     },
     loginContainer: {
         justifyContent: 'flex-end',
-        marginBottom: 100,
     },
     title: {
-        fontFamily: 'Avenir Next',
-        fontWeight: "500",
         textShadowColor: 'gray',
         textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 2,
         textAlign: 'center',
         color: 'white',
         fontSize: 40,
-        marginTop: 150,
-        marginBottom: 40
+        marginTop: 140,
     },
-    // title: {
-    //     fontFamily: 'Avenir Next',
-    //     textShadowColor: 'gray',
-    //     textShadowOffset: { width: -1, height: 1 },
-    //     textShadowRadius: 2,
-    //     textAlign: 'center',
-    //     color: 'white',
-    //     fontSize: 40,
-    //     marginTop: 140,
-    // },
     hide: {
         marginTop: 5,
         fontSize: 12,
@@ -286,8 +279,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
     match: {
-        opacity: 0
-    }
+        opacity: 0,
+    },
+    invisible: {
+        opacity: 0,
+        marginVertical: 30,
+    },
 });
 
 const mapStateToProps = state => {

@@ -1,44 +1,39 @@
-import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  ImageBackground,
-  TouchableOpacity
-} from "react-native";
-import { Button } from "react-native-elements";
-import { height, width } from "../../constants/Layout";
-import colors from "../../constants/Colors";
-import Icon from "react-native-vector-icons/FontAwesome";
-import Icon2 from "react-native-vector-icons/Ionicons";
-// import Video from "../../node_modules/react-native-video";
+import React from 'react';
+import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
+import {Button} from 'react-native-elements';
+import {height, width} from '../../constants/Layout';
+import colors from '../../constants/Colors';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/Ionicons';
+import AudioPlayer from '../../components/Player/AudioPlayer';
+import {connect} from 'react-redux';
+import {selectPrayer} from '../../ducks/reducers/prayerReducer';
+import background from '../../assets/images/login-background.jpg';
 
-export default class PrayerPlayer extends React.Component {
+class PrayerPlayer extends React.Component {
   state = {
     prayerList: [],
-    selected: false
+    selected: false,
   };
 
   static navigationOptions = {
-    header: null
+    header: null,
   };
 
   render() {
-    const { selected } = this.state;
+    const {prayers} = this.props;
+
+    const playPrayers = prayers
+      ? prayers.filter(e => {
+          if (e.selected) {
+            return e;
+          }
+        })
+      : null;
 
     return (
-      <ImageBackground style={{ flex: 1 }}>
-        <Text style={styles.title}>Audio Player</Text>
-        {/* <Video
-          ref={ref => {
-            this.player = ref;
-          }}
-          onBuffer={this.onBuffer}
-          onError={this.videoError}
-          source={{ uri: "background" }}
-          style={styles.backgroundVideo}
-        /> */}
+      <ImageBackground source={background} style={styles.container}>
+        <AudioPlayer prayers={playPrayers} />
       </ImageBackground>
     );
   }
@@ -47,24 +42,19 @@ export default class PrayerPlayer extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    alignItems: "center"
   },
-  title: {
-    textShadowColor: "black",
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 8,
-    textAlign: "center",
-    color: "white",
-    fontSize: 70,
-    marginTop: 70,
-    marginBottom: 30
-  },
-  backgroundVideo: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    bottom: 0,
-    right: 0
-  }
 });
+
+const mapStateToProps = state => {
+  return {
+    prayers: state.prayerReducer.prayers,
+    prayersLoading: state.prayerReducer.prayersLoading,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    selectPrayer,
+  },
+)(PrayerPlayer);
