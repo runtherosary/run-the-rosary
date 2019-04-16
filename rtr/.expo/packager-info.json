@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://ey-5dh.anonymous.rtr.exp.direct",
+  "packagerNgrokUrl": "https://packager.ey-5dh.anonymous.rtr.exp.direct",
+  "ngrokPid": 13827
 }

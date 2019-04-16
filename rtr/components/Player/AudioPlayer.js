@@ -30,7 +30,7 @@ export default class AudioPlayer extends Component {
   }
 
   render() {
-    let { url, title } = [{title: "Our one fucking song", url: 'http://russprince.com/hobbies/files/13%20Beethoven%20-%20Fur%20Elise.mp3'}][this.state.currentPosition]
+    let { url, title } = [{title: "Our one song", url: 'http://russprince.com/hobbies/files/13%20Beethoven%20-%20Fur%20Elise.mp3'}][this.state.currentPosition]
     return (
       <View style={styles.container}>
         <Text style={styles.titleText}>{title ? title : "Some test title"}</Text>
