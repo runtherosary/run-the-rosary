@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity }
 import { AsyncStorage } from 'react-native';
 import { Button } from 'react-native-elements';
 import { height, width } from '../constants/Layout';
-// import GetStarted from '../components/modals/GetStarted';
+import GetStarted from '../components/modals/GetStarted';
 import background from '../assets/images/splash-background.jpg';
 import greentrail from "../assets/images/greentrail.jpg";
 import mountain from "../assets/images/mountain.jpg";
@@ -16,7 +16,7 @@ import Carousel from "../components/Carousel/Carousel"
 class SplashScreen extends React.Component {
   state = {
     user: {},
-    name: 'wick'
+    name: 'wick',
   };
 
   static navigationOptions = {
@@ -37,7 +37,6 @@ class SplashScreen extends React.Component {
             <Text style={styles.title}>Run the Rosary</Text>
           </View>
           <View style={styles.register}>
-
             <Button
               title='Register'
               onPress={() => this.props.navigation.navigate('Login')}
@@ -51,7 +50,7 @@ class SplashScreen extends React.Component {
                 color: 'white',
                 fontSize: 30,
                 fontWeight: 'bold',
-                letterSpacing: 2
+                letterSpacing: 2,
               }}
             />
             <Button
@@ -69,7 +68,7 @@ class SplashScreen extends React.Component {
                 color: 'white',
                 fontSize: 30,
                 fontWeight: 'bold',
-                letterSpacing: 2
+                letterSpacing: 2,
               }}
             />
           </View>
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: 150,
-    marginHorizontal: 50
+    marginHorizontal: 50,
   },
   title: {
     fontFamily: 'Avenir Next',
@@ -108,15 +107,18 @@ const styles = StyleSheet.create({
 
   start: {
     fontSize: 45,
-    color: colors.blue
+    color: colors.blue,
   },
 });
 
 const mapStateToProps = state => {
   return {
     users: state.userReducer.users,
-    user: state.userReducer.users
-  }
-}
+    user: state.userReducer.users,
+  };
+};
 
-export default connect(mapStateToProps, { getAllUsers })(SplashScreen);
+export default connect(
+  mapStateToProps,
+  { getAllUsers },
+)(SplashScreen);

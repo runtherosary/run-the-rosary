@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { login, register } from "../ducks/reducers/userReducer";
 import axios from 'axios';
 
-import { height, width } from '../constants/Layout';
+import { width } from '../constants/Layout';
 
 class LoginScreen extends React.Component {
     state = {
@@ -20,12 +20,14 @@ class LoginScreen extends React.Component {
         confirmSecure: true,
         signUp: false,
         invalidConfirm: false,
+        missingField: false,
         email: '',
         password: '',
         confirmPassword: '',
         firstName: '',
         lastName: '',
-        user: []
+        user: [],
+        loginError: false,
     };
 
     static navigationOptions = {
@@ -34,29 +36,8 @@ class LoginScreen extends React.Component {
     };
 
     componentDidMount = async () => {
-        // console.log("Current User: ", this.props.user)
-
-        let person = {
-            email: 'email@email.com',
-            password: 'password'
-        }
-
-        await AsyncStorage.setItem("user", this.state.email);
-        const user = await AsyncStorage.getItem('user');
-        console.log("User: ", user)
-
-        // var userExists = await AsyncStorage.getItem('user');
-        // var async = await AsyncStorage.getAllKeys();
-        // console.log("Async: ", async)
-
-        // if (userExists) {
-        //     console.log("User: ", userExists)
-        //     let {email, password} = userExists;
-        //     this.setState({email, password});
-        // } else {
-        //     userExists = []
-        // }
-    }
+        await AsyncStorage.setItem('user', this.state.email);
+    };
 
     authenticate = async () => {
         let { email, password, firstName, lastName, signUp } = this.state;
@@ -64,32 +45,39 @@ class LoginScreen extends React.Component {
 
         const credentials = {
             email,
-            password
-        }
+            password,
+        };
         const registerCredentials = {
             firstName,
             lastName,
             email,
-            password
-        }
+            password,
+        };
+
         if (!signUp) {
             login(credentials);
-            // AsyncStorage.setItem("user", credentials).then(res => {
-            //     this.props.navigation.navigate("Home");
-            //     console.warn("Login 62: ", res); 
-            // }).catch(err => {
-            //     console.warn("error: ", err)
-            // })
+            //   AsyncStorage.setItem('user', credentials)
+            //     .then(res => {
+            //       this.props.navigation.navigate('Home');
+            //     })
+            //     .catch(err => {
+            //       if (err) {
+            //         this.setState({loginError: true});
+            //       }
+            //     });
         } else {
             register(registerCredentials);
-            // AsyncStorage.setItem("user", credentials).then(res => {
-            //     this.props.navigation.navigate("Home");
-            //     console.warn("Login Register 70:", res);
-            // }).catch(err => {
-            //     console.warn("error: ", err)
-            // })
+            //   AsyncStorage.setItem('user', credentials)
+            //     .then(res => {
+            //       this.props.navigation.navigate('Home');
+            //     })
+            //     .catch(err => {
+            //       if (err) {
+            //         this.setState({loginError: true});
+            //       }
+            //     });
         }
-    }
+    };
 
     render() {
         let { secure, signUp, invalidConfirm, password, confirmPassword, email, firstName, lastName } = this.state;
@@ -304,8 +292,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        user: state.userReducer.user
-    }
-}
+        user: state.userReducer.user,
+    };
+};
 
-export default connect(mapStateToProps, { login, register })(LoginScreen);
+export default connect(
+    mapStateToProps,
+    { login, register },
+)(LoginScreen);

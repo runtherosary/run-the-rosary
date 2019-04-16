@@ -1,11 +1,11 @@
-import React from "react";
-import { StyleSheet, View, ImageBackground } from "react-native";
+import React from 'react';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import { height, width } from "../constants/Layout";
-import clouds from "../assets/images/cloud-splash.jpg";
+import { height, width } from '../constants/Layout';
+import clouds from '../assets/images/cloud-splash.jpg';
 
-import Animation from "lottie-react-native";
-import stopwatch from "../assets/animations/stopwatch.json";
+import Animation from 'lottie-react-native';
+import stopwatch from '../assets/animations/stopwatch.json';
 
 export default class LoadingScreen extends React.Component {
   state = {
@@ -37,8 +37,7 @@ export default class LoadingScreen extends React.Component {
   render() {
     return (
       <ImageBackground source={clouds} style={styles.container}>
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Animation
             ref={animation => {
               this.animation = animation;
@@ -55,15 +54,15 @@ export default class LoadingScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   title: {
-    textShadowColor: "black",
+    textShadowColor: 'black',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 8,
-    textAlign: "center",
-    color: "white",
+    textAlign: 'center',
+    color: 'white',
     fontSize: 70,
-    marginTop: 70
-  }
+    marginTop: 70,
+  },
 });
