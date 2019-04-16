@@ -1,9 +1,18 @@
 {
   "devToolsPort": 19002,
+<<<<<<< HEAD
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://ey-5dh.anonymous.rtr.exp.direct",
+  "packagerNgrokUrl": "https://packager.ey-5dh.anonymous.rtr.exp.direct",
+  "ngrokPid": 13827
+=======
   "expoServerPort": 19000,
   "packagerPort": 19003,
   "packagerPid": 34556,
   "expoServerNgrokUrl": "https://ey-5dh.anonymous.rtr.exp.direct",
   "packagerNgrokUrl": "https://packager.ey-5dh.anonymous.rtr.exp.direct",
   "ngrokPid": 34591
+>>>>>>> master
 }
