@@ -90,6 +90,7 @@ class PrayerList extends React.Component {
             textStyle={styles.text}
             onPress={() => {
               this.done();
+              this.props.navigation.navigate('PrayerPlayer');
             }}
           />
         </View>

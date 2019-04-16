@@ -93,12 +93,14 @@ class LoginScreen extends React.Component {
         <View style={styles.loginContainer}>
           <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <Text style={styles.account}>
-              <Text style={signUp ? styles.account : styles.register} onPress={() => this.setState({signUp: !this.state.signUp, missingField: false})}>
+              <Text
+                style={signUp ? styles.account : styles.register}
+                onPress={() => this.setState({signUp: !this.state.signUp, missingField: false})}>
                 Register
               </Text>{' '}
               for a new account.
             </Text>
-            {loginError ? <Text style={styles.invalid}>There was an error signing in.</Text> : null}
+            {loginError && <Text style={styles.invalid}>There was an error signing in.</Text>}
           </View>
           <TouchableHighlight>
             <TextInput
@@ -129,7 +131,7 @@ class LoginScreen extends React.Component {
             style={{justifyContent: 'center', alignItems: 'center'}}>
             {secure ? <Text style={styles.show}>Show Password</Text> : <Text style={styles.hide}>Hide Password</Text>}
           </TouchableOpacity>
-            
+
           {signUp ? (
             <View>
               <TouchableHighlight>
@@ -171,37 +173,37 @@ class LoginScreen extends React.Component {
               </TouchableHighlight>
               <TouchableOpacity
                 onPress={() => {
-                    if(!firstName || !lastName || !email || !password){
-                        this.setState({missingField: true})
+                  if (!firstName || !lastName || !email || !password) {
+                    this.setState({missingField: true});
                   } else if (confirmPassword !== password) {
-                        this.setState({invalidConfirm: true});
+                    this.setState({invalidConfirm: true});
                   } else {
-                        this.authenticate();
-                        this.props.navigation.navigate('Home');
+                    this.authenticate();
+                    this.props.navigation.navigate('Home');
                   }
                 }}
                 style={{justifyContent: 'center', alignItems: 'center', marginTop: 30}}>
                 {submit}
               </TouchableOpacity>
-              {missingField && <Text style={styles.invalid}>All fields are required.</Text>}
             </View>
-          ) : 
-          <View>
-                {missingField && <Text style={styles.invalid}>All fields are required.</Text>}
-                <TouchableOpacity
+          ) : (
+            <View>
+              <TouchableOpacity
                 onPress={() => {
-                    if(!email || !password){
-                        this.setState({missingField: true})
-                    }else{
-                        this.authenticate();
-                        this.props.navigation.navigate('Home');
-                    }
+                  if (!email || !password) {
+                    this.setState({missingField: true});
+                  } else {
+                    this.authenticate();
+                    this.props.navigation.navigate('Home');
+                  }
                 }}
-                style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                style={{justifyContent: 'center', alignItems: 'center', marginTop: 30}}>
                 {submit}
-            </TouchableOpacity>
-            </View>}
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
+        <Text style={missingField ? [styles.invalid, {marginVertical: 30}] : styles.invisible}>All fields are required.</Text>
       </ImageBackground>
     );
   }
@@ -242,7 +244,6 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     justifyContent: 'flex-end',
-    marginBottom: 100,
   },
   title: {
     textShadowColor: 'gray',
@@ -279,6 +280,10 @@ const styles = StyleSheet.create({
   },
   match: {
     opacity: 0,
+  },
+  invisible: {
+    opacity: 0,
+    marginVertical: 30,
   },
 });
 

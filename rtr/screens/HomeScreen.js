@@ -41,7 +41,7 @@ export default class HomeScreen extends React.Component {
 
               <Button
                 title='Prayer'
-                onPress={() => this.props.navigation.navigate('Login')}
+                onPress={() => this.props.navigation.navigate('PrayerList')}
                 buttonStyle={{
                   marginVertical: height / 12,
                   marginHorizontal: 5,
