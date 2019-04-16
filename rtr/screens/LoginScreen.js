@@ -112,114 +112,102 @@ class LoginScreen extends React.Component {
                             Register
                         </Text> for a new account.
                         </Text>
-<<<<<<< HEAD
-                </View>
-                <TouchableHighlight>
-                    <TextInput
-                        onChangeText={(text) => this.setState({ username: text })}
-                        style={styles.input}
-                        value={email ? email : null}
-                        placeholder='Email'
-                        autoCapitalize='none'
-                        placeholderTextColor='white'
-=======
-					</View>
-					<TouchableHighlight>
-						<TextInput
+                    </View>
+                    <TouchableHighlight>
+                        <TextInput
                             onChangeText={(text) => this.setState({ email: text })}
-							style={styles.input}
-							  value={email ? email : null}
-							placeholder='Email@email.com'
-							autoCapitalize='none'
-							placeholderTextColor='white'
->>>>>>> master
-                        placeholderTextFontWeight='bold'
-                        selectionColor='white'
-                    />
-                </TouchableHighlight>
-                <TouchableHighlight>
-                    <TextInput
-                        onChangeText={(text) => this.setState({ password: text })}
-                        style={styles.passwordInput}
-                        value={password ? password : null}
-                        placeholder='Password'
-                        selectionColor='white'
-                        autoCapitalize='none'
-                        placeholderTextColor='white'
-                        secureTextEntry={this.state.secure}
-                    />
-                </TouchableHighlight>
-                <TouchableOpacity
-                    onPress={() => this.setState({ secure: !this.state.secure })}
-                    style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    {secure ? (
-                        <Text style={styles.show}>Show Password</Text>
-                    ) : (
-                            <Text style={styles.hide}>Hide Password</Text>
-                        )}
-                </TouchableOpacity>
-
-                {signUp ? null : (
-                    <TouchableOpacity onPress={() => {
-                        this.authenticate();
-                        this.props.navigation.navigate('Home')
-                    }}
-                        style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }} >
-                        {submit}
+                            style={styles.input}
+                            value={email ? email : null}
+                            placeholder='Email@email.com'
+                            autoCapitalize='none'
+                            placeholderTextColor='white'
+                            placeholderTextFontWeight='bold'
+                            selectionColor='white'
+                        />
+                    </TouchableHighlight>
+                    <TouchableHighlight>
+                        <TextInput
+                            onChangeText={(text) => this.setState({ password: text })}
+                            style={styles.passwordInput}
+                            value={password ? password : null}
+                            placeholder='Password'
+                            selectionColor='white'
+                            autoCapitalize='none'
+                            placeholderTextColor='white'
+                            secureTextEntry={this.state.secure}
+                        />
+                    </TouchableHighlight>
+                    <TouchableOpacity
+                        onPress={() => this.setState({ secure: !this.state.secure })}
+                        style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        {secure ? (
+                            <Text style={styles.show}>Show Password</Text>
+                        ) : (
+                                <Text style={styles.hide}>Hide Password</Text>
+                            )}
                     </TouchableOpacity>
-                )}
 
-                {signUp ? (
-                    <View>
-                        <TouchableHighlight>
-                            <TextInput
-                                onChangeText={(text) => this.setState({ confirmPassword: text })}
-                                style={[styles.passwordInput, { marginTop: 20 }]}
-                                value={confirmPassword ? confirmPassword : null}
-                                placeholder='Confirm Password'
-                                selectionColor='white'
-                                autoCapitalize='none'
-                                placeholderTextColor='white'
-                                secureTextEntry={this.state.confirmSecure}
-                            />
-                        </TouchableHighlight>
-
-                        <Text style={invalidConfirm ? styles.invalid : styles.match}>Passwords do not match.</Text>
-
-                        <TouchableHighlight>
-                            <TextInput
-                                onChangeText={(text) => this.setState({ firstName: text })}
-                                style={styles.input}
-                                selectionColor='white'
-                                value={firstName ? firstName : null}
-                                placeholder='First Name'
-                                autoCapitalize="none"
-                                placeholderTextColor="white"
-                            />
-                        </TouchableHighlight>
-                        <TouchableHighlight>
-                            <TextInput
-                                onChangeText={(text) => this.setState({ lastName: text })}
-                                value={lastName ? lastName : null}
-                                style={styles.input}
-                                selectionColor='white'
-                                placeholder='Last Name'
-                                autoCapitalize="none"
-                                placeholderTextColor="white"
-                            />
-                        </TouchableHighlight>
+                    {signUp ? null : (
                         <TouchableOpacity onPress={() => {
-                            if (confirmPassword !== password) {
-                                this.setState({ invalidConfirm: true })
-                            } else {
-                                this.authenticate();
-                                this.props.navigation.navigate('Home')
-                            }
-                        }} style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }} >
+                            this.authenticate();
+                            this.props.navigation.navigate('Home')
+                        }}
+                            style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }} >
                             {submit}
                         </TouchableOpacity>
-                    </View>
-                ) : null}
+                    )}
+
+                    {signUp ? (
+                        <View>
+                            <TouchableHighlight>
+                                <TextInput
+                                    onChangeText={(text) => this.setState({ confirmPassword: text })}
+                                    style={[styles.passwordInput, { marginTop: 20 }]}
+                                    value={confirmPassword ? confirmPassword : null}
+                                    placeholder='Confirm Password'
+                                    selectionColor='white'
+                                    autoCapitalize='none'
+                                    placeholderTextColor='white'
+                                    secureTextEntry={this.state.confirmSecure}
+                                />
+                            </TouchableHighlight>
+
+                            <Text style={invalidConfirm ? styles.invalid : styles.match}>Passwords do not match.</Text>
+
+                            <TouchableHighlight>
+                                <TextInput
+                                    onChangeText={(text) => this.setState({ firstName: text })}
+                                    style={styles.input}
+                                    selectionColor='white'
+                                    value={firstName ? firstName : null}
+                                    placeholder='First Name'
+                                    autoCapitalize="none"
+                                    placeholderTextColor="white"
+                                />
+                            </TouchableHighlight>
+                            <TouchableHighlight>
+                                <TextInput
+                                    onChangeText={(text) => this.setState({ lastName: text })}
+                                    value={lastName ? lastName : null}
+                                    style={styles.input}
+                                    selectionColor='white'
+                                    placeholder='Last Name'
+                                    autoCapitalize="none"
+                                    placeholderTextColor="white"
+                                />
+                            </TouchableHighlight>
+                            <TouchableOpacity onPress={() => {
+                                if (confirmPassword !== password) {
+                                    this.setState({ invalidConfirm: true })
+                                } else {
+                                    this.authenticate();
+                                    this.props.navigation.navigate('Home')
+                                }
+                            }} style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }} >
+                                {submit}
+                            </TouchableOpacity>
+                        </View>
+                    ) : null}
                 </View>
             </ImageBackground >
         );
