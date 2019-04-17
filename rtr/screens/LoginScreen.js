@@ -77,7 +77,9 @@ class LoginScreen extends React.Component {
   render() {
     let {secure, signUp, invalidConfirm, missingField, password, confirmPassword, email, firstName, lastName, loginError} = this.state;
     let {login, register} = this.props;
+
     const back = <Icon name='arrowleft' size={30} color='#fff' />;
+
     const submit = <Icon name='arrowright' size={30} color='#fff' />;
     return (
       <ImageBackground style={styles.container} source={background}>

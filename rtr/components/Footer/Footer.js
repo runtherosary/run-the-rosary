@@ -6,6 +6,10 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class Footer extends React.Component {
+  componentDidMount() {
+    console.warn('props: ', this.props);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -19,13 +23,19 @@ export default class Footer extends React.Component {
           onPress={() => {
             this.props.navigation.navigate('RosarySplash');
           }}>
-          <Icon2 name='christianity' size={30} color='#fff' />
+          <Icon2 name='book' size={30} color='#fff' />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.navigate('PrayerList');
           }}>
-          <Icon name='lock' size={30} color='#fff' />
+          <Icon name='plus' size={30} color='#fff' />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('PrayerPlayer');
+          }}>
+          <Icon name='play' size={30} color='#fff' />
         </TouchableOpacity>
       </View>
     );
