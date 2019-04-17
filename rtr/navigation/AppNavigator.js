@@ -1,12 +1,13 @@
-import React from "react";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import Home from "../screens/HomeScreen";
-import Login from "../screens/LoginScreen";
-import Splash from "../screens/SplashScreen";
-import Loading from "../screens/LoadingScreen";
-import RosarySplash from "../screens/Rosary/RosarySplash";
-import PrayerList from "../screens/Prayer/PrayerList";
-import PrayerPlayer from "../screens/Prayer/PrayerPlayer";
+import React from 'react';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import Home from '../screens/HomeScreen';
+import Login from '../screens/LoginScreen';
+import Splash from '../screens/SplashScreen';
+import Loading from '../screens/LoadingScreen';
+import RosaryList from '../screens/Rosary/RosaryList';
+import RosarySplash from '../screens/Rosary/RosarySplash';
+import PrayerList from '../screens/Prayer/PrayerList';
+import PrayerPlayer from '../screens/Prayer/PrayerPlayer';
 
 //   import MainTabNavigator from "./MainTabNavigator";
 
@@ -21,6 +22,7 @@ export default createAppContainer(
     Home: Home,
     RosarySplash: RosarySplash,
     PrayerList: PrayerList,
-    PrayerPlayer: PrayerPlayer
-  })
+    PrayerPlayer: PrayerPlayer,
+    RosaryList: RosaryList,
+  }),
 );
