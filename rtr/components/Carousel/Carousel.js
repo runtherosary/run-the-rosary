@@ -22,193 +22,81 @@ import trail from "../../assets/images/trail.jpg";
 
 
 export default class startCarousel extends React.Component {
-
     state = {
         button: "Next",
         views: [
             {
                 id: 1,
-                image: mountain,
+                // image: mountain,
                 title: "Pray to the Rosary while you run"
             },
             {
                 id: 2,
-                image: greentrail,
+                // image: greentrail,
                 title: "Customize your own prayer list"
             },
             {
                 id: 3,
-                image: trail,
+                // image: trail,
                 title: "Set your own pace with beats"
             }
         ]
     }
 
-    async componentDidMount() {
-        this.animation.play();
-    }
+    // async componentDidMount() {
+    //     this.animation.play();
+    // }
+
+    scrollX = new Animated.Value(0)
 
     render() {
-        const { views, button, page } = this.state;
-        const { id } = views;
-        if (views && views.length) {
-            return (
-                <View style={styles.scrollContainer}>
+        // const { views } = this.state;
+        let position = Animated.divide(this.scrollX, width);
+        let views = this.state.views.map((view, i) => {
+            if (view && view.length) {
+                return (
+                    <Text key={i} style={styles.text}>{view.title}</Text>
+                )
+            }
+        });
+        return (
+            <View style={styles.container}>
+                <ImageBackground style={{ width, height }} source={mountain}>
                     <ScrollView
                         horizontal
                         pagingEnabled
                         showsHorizontalScrollIndicator={false}
+                        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: this.scrollX } } }])}
                     >
-                        {views.map((view, i) => (
-                            <View key={i}>
-                                <ImageBackground style={styles.image} source={view.image}>
-                                    < Animation
-                                        ref={
-                                            animation => {
-                                                this.animation = animation;
-                                            }
-                                        }
-                                        style={{ width: 400, height: 400 }}
-                                        loop={true}
-                                        source={runnerman}
-                                    />
-                                    <Text style={styles.text}>{view.title}</Text>
-
-                                    {
-                                        view.id === 1 ? (
-                                            <View
-                                                style={{
-                                                    zIndex: 20,
-                                                    flexDirection: "row",
-                                                    justifyContent: "center",
-                                                    alignItems: "center",
-                                                    marginBottom: 20
-                                                }}>
-                                                <Button
-                                                    buttonStyle={{
-                                                        zIndex: 20,
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.teal,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6,
-                                                    }}
-                                                />
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.falu,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6,
-
-                                                    }}
-                                                />
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.falu,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6,
-                                                    }}
-                                                />
-                                            </View>
-                                        ) : view.id === 2 ? (
-                                            <View
-                                                style={{
-                                                    flexDirection: "row",
-                                                    justifyContent: "center",
-                                                    alignItems: "center"
-                                                }}>
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.falu,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6
-                                                    }}
-                                                />
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.teal,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6
-                                                    }}
-                                                />
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.falu,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6
-                                                    }}
-                                                    />
-                                            </View>
-                                        ) : view.id === 3 ? (
-                                            <View
-                                                style={{
-                                                    flexDirection: "row",
-                                                    justifyContent: "center",
-                                                    alignItems: "center"
-                                                }}>
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.falu,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6
-                                                    }}
-                                                />
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.falu,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6
-                                                    }}
-                                                />
-                                                <Button
-                                                    buttonStyle={{
-                                                        height: 10,
-                                                        width: 10,
-                                                        borderRadius: 10,
-                                                        backgroundColor: colors.teal,
-                                                        marginHorizontal: 3,
-                                                        marginVertical: 6,
-                                                    }}
-                                                />
-                                            </View> 
-                                        ) : null
-                                    }
-                                </ImageBackground>
-                            </View>
-                        ))}
+                        {views}
                     </ScrollView>
-                </View>
-            )
-        }
+                    <View style={{ flexDirection: 'row' }}>
+                        {this.state.views.map((_, i) => {
+                            let opacity = position.interpolate({
+                                inputRange: [i - 1, i, i + 1],
+                                outputRange: [0.3, 1, 0.3],
+                                extrapolate: 'clamp'
+                            });
+                            return (
+                                <Animated.View
+                                    key={i}
+                                    style={{ opacity, height: 10, width: 10, backgroundColor: 'black', margin: 8, borderRadius: 5 }}
+                                />
+                            )
+                        })}
+                    </View>
+                </ImageBackground>
+            </View>
+        )
     }
-
-}
+};
 
 const styles = StyleSheet.create({
-    scrollContainer: {
-        height,
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 30,
     },
     image: {
         width,
@@ -217,6 +105,14 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center"
+    },
+    fixed: {
+        width,
+        height,
+        zIndex: -1,
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
     },
     viewContainer: {
         height: 400,
@@ -228,11 +124,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontFamily: "Avenir Next",
         letterSpacing: 1.5
-    },
-    next: {
-        backgroundColor: colors.teal
-    },
-    start: {
-        backgroundColor: "green"
     }
 });
+
+
