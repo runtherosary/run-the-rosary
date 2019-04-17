@@ -44,7 +44,7 @@ class PrayerPlayer extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 100,
+    paddingTop: 50,
   },
   back: {
     justifyContent: 'flex-start',

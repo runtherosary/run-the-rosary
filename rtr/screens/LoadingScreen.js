@@ -1,48 +1,47 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground } from 'react-native';
-import { AsyncStorage } from 'react-native';
-import { height, width } from '../constants/Layout';
-import clouds from '../assets/images/cloud-splash.jpg';
+import {StyleSheet, View, ImageBackground} from 'react-native';
+import {AsyncStorage} from 'react-native';
+import {height, width} from '../constants/Layout';
+import clouds from '../assets/images/login-background.jpg';
 
 import Animation from 'lottie-react-native';
-import stopwatch from '../assets/animations/stopwatch.json';
+import stopwatch from '../assets/animations/titleAnim.json';
 
 export default class LoadingScreen extends React.Component {
   state = {
-    isLoading: true
-  }
+    isLoading: true,
+  };
 
   componentDidMount = async () => {
-    let { isLoading } = this.state;
+    let {isLoading} = this.state;
     const user = await AsyncStorage.getItem('user');
 
     if (user) {
-      this.setState({ isLoading: false })
+      this.setState({isLoading: false});
     }
 
     this.animation.play();
     if (user) {
       setTimeout(() => {
-        this.props.navigation.navigate("Splash");
+        this.props.navigation.navigate('Splash');
         // NEED TO SWAP NAV LOGIC BEFORE PUSHING !!!
       }, !isLoading);
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate("Home");
-      }, 5000)
+        this.props.navigation.navigate('Home');
+      }, 6000);
     }
-    console.warn("User: ", user);
-  }
+  };
 
   render() {
     return (
       <ImageBackground source={clouds} style={styles.container}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Animation
             ref={animation => {
               this.animation = animation;
             }}
-            style={{ width: 300, height: 300 }}
+            style={{width: 350, height: 350}}
             loop={true}
             source={stopwatch}
           />
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textShadowColor: 'black',
-    textShadowOffset: { width: -1, height: 1 },
+    textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 8,
     textAlign: 'center',
     color: 'white',

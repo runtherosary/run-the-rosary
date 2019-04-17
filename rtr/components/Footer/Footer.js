@@ -6,39 +6,48 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class Footer extends React.Component {
-  componentDidMount() {
-    console.warn('props: ', this.props);
-  }
+  state = {
+    paths: [
+      {path: 'Login', pathIcon: 'login'},
+      {path: 'Home', pathIcon: 'home'},
+      {path: 'RosaryList', pathIcon: 'book'},
+      {path: 'PrayerList', pathIcon: 'plus'},
+      {path: 'PrayerPlayer', pathIcon: 'play'},
+    ],
+  };
+
+  renderFooterIcon = paths => {
+    let routing = paths.map((e, i) => {
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            route(e.path);
+          }}>
+          <Icon2 name={e.pathIcon} size={30} color='#fff' />
+        </TouchableOpacity>
+      );
+    });
+
+    return routing;
+  };
 
   render() {
-    return (
-      <View style={styles.container}>
+    let {route, screen} = this.props;
+    let {paths} = this.state;
+
+    const renderFooter = paths.map((e, i) => {
+      return (
         <TouchableOpacity
+          key={i}
           onPress={() => {
-            this.props.navigation.navigate('Home');
+            route(e.path);
           }}>
-          <Icon name='home' size={30} color='#fff' />
+          <Icon2 name={e.pathIcon} size={30} color='#fff' />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate('RosarySplash');
-          }}>
-          <Icon2 name='book' size={30} color='#fff' />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate('PrayerList');
-          }}>
-          <Icon name='plus' size={30} color='#fff' />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            this.props.navigation.navigate('PrayerPlayer');
-          }}>
-          <Icon name='play' size={30} color='#fff' />
-        </TouchableOpacity>
-      </View>
-    );
+      );
+    });
+
+    return <View style={styles.container}>{renderFooter}</View>;
   }
 }
 
