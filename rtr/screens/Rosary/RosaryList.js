@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
 import {Button} from 'react-native-elements';
-import {width} from '../../constants/Layout';
+import {width, height} from '../../constants/Layout';
 import colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import background from '../../assets/images/login-background.jpg';
@@ -44,6 +44,10 @@ class RosaryList extends React.Component {
       }
     }
   };
+
+  route(path) {
+    this.props.navigation.navigate(path);
+  }
 
   render() {
     const {prayers, prayersLoading} = this.props;
@@ -96,6 +100,32 @@ class RosaryList extends React.Component {
             }}
           />
         </View>
+        <View style={styles.footerContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this.route('Home');
+            }}>
+            <Icon name='home' size={30} color='#fff' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.route('RosaryList');
+            }}>
+            <Icon name='book' size={30} color='#fff' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.route('PrayerList');
+            }}>
+            <Icon name='plus' size={30} color='#fff' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.route('PrayerPlayer');
+            }}>
+            <Icon name='play' size={30} color='#fff' />
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     );
   }
@@ -144,18 +174,28 @@ const styles = StyleSheet.create({
   done: {
     width,
     backgroundColor: 'green',
-    height: 80,
+    height: 50,
   },
   gray: {
     width,
     backgroundColor: 'gray',
-    height: 80,
+    height: 50,
   },
   text: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
     letterSpacing: 2,
+  },
+  footerContainer: {
+    backgroundColor: colors.darkgray,
+    opacity: 0.8,
+    width,
+    height: height / 13,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 50,
   },
 });
 
