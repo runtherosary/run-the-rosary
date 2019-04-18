@@ -1,24 +1,22 @@
 import React from 'react';
-import {StyleSheet, Image, View, Text, ScrollView, ImageBackground, TouchableOpacity, Platform} from 'react-native';
-import {Button} from 'react-native-elements';
-import {width, height} from '../../constants/Layout';
+import { StyleSheet, View, Image, Text, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
+import { width, height } from '../../constants/Layout';
 import colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/AntDesign';
-import background from '../../assets/images/homescreen.jpeg';
-import {connect} from 'react-redux';
-import {getPrayersByType, selectPrayer} from '../../ducks/reducers/prayerReducer';
 import Animation from 'lottie-react-native';
 import title from '../../assets/animations/titleAnim.json';
 import rosary from '../../assets/images/rosary.png';
 import pray from '../../assets/images/praying-hands.png';
-import Footer from '../../components/Footer/Footer';
+import background from '../../assets/images/login-background.jpg';
+import { connect } from 'react-redux';
+import { getPrayersByType, selectPrayer } from '../../ducks/reducers/prayerReducer';
 
-class PrayerList extends React.Component {
+class RosaryList extends React.Component {
   state = {
-    screen: 'PrayerList',
-    prayerList: [],
-    selectedPrayerList: [],
+    rosaryList: [],
+    selectedRosaryList: [],
     selected: 0,
     check: true,
   };
@@ -28,23 +26,23 @@ class PrayerList extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getPrayersByType('General');
+    this.props.getPrayersByType('Rosary');
     this.animationb.play(145, 164);
   };
 
   done = () => {
-    let {prayers} = this.props;
+    let { prayers } = this.props;
     let selected = [];
     for (var i = 0; i < prayers.length; i++) {
       if (prayers[i].selected) {
         selected.push(prayers[i]);
       }
     }
-    this.setState({selectedPrayerList: selected});
+    this.setState({ selectedPrayerList: selected });
   };
 
   setPlayButton = () => {
-    let {prayers} = this.props;
+    let { prayers } = this.props;
 
     for (var i = 0; i < prayers.length; i++) {
       if (prayers.some(e => e.selected)) {
@@ -58,10 +56,10 @@ class PrayerList extends React.Component {
   }
 
   render() {
-    const {prayers, prayersLoading} = this.props;
-    const {screen} = this.state;
-
+    const { prayers, prayersLoading } = this.props;
     const back = <Icon2 name='arrowleft' size={30} color='#fff' />;
+    console.log('Rosaries', this.props.prayers);
+
     const playRoute = (
       <Animation
         ref={animation => {
@@ -73,44 +71,44 @@ class PrayerList extends React.Component {
       />
     );
 
-    const rosaryBeads = <Image source={rosary} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
-    const prayerHands = <Image source={pray} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
+    const rosaryBeads = <Image source={rosary} style={{ height: 20, width: 20, marginBottom: 4, marginTop: 4 }} />;
+    const prayerHands = <Image source={pray} style={{ height: 20, width: 20, marginBottom: 4, marginTop: 4 }} />;
 
     const list = !prayersLoading
       ? prayers.map((e, i) => {
-          return (
+        return (
+          <TouchableOpacity
+            key={i}
+            style={styles.listContainer}
+            onPress={() => {
+              this.props.selectPrayer(e, i);
+            }}>
             <TouchableOpacity
-              key={i}
-              style={styles.listContainer}
               onPress={() => {
                 this.props.selectPrayer(e, i);
               }}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.selectPrayer(e, i);
-                }}>
-                <Text style={e.selected ? styles.selectedListText : styles.unselectedListText}>{e.prayer_name}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.selectPrayer(e, i);
-                }}>
-                {e.selected ? <Icon name='check' size={20} color='green' /> : <Icon name='plus' size={20} color='white' />}
-              </TouchableOpacity>
+              <Text style={e.selected ? styles.selectedListText : styles.unselectedListText}>{e.prayer_name}</Text>
             </TouchableOpacity>
-          );
-        })
+            <TouchableOpacity
+              onPress={() => {
+                this.props.selectPrayer(e, i);
+              }}>
+              {e.selected ? <Icon name='check' size={20} color='green' /> : <Icon name='plus' size={20} color='white' />}
+            </TouchableOpacity>
+          </TouchableOpacity>
+        );
+      })
       : null;
 
     return (
       <ImageBackground style={styles.container} source={background}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.back}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('PrayerList')} style={styles.back}>
             {back}
           </TouchableOpacity>
-          <Text style={styles.headerText}>Select Prayers</Text>
+          <Text style={styles.headerText}>Select Rosary</Text>
           <TouchableOpacity
-            style={{paddingRight: 30}}
+            style={{ paddingRight: 30 }}
             onPress={() => {
               this.route('User');
             }}>
@@ -120,12 +118,13 @@ class PrayerList extends React.Component {
         <ScrollView contentContainerStyle={styles.scrollContainer}>{list}</ScrollView>
         <View styles={styles.footer}>
           <Button
-            title={this.setPlayButton() ? 'PLAY' : 'Select Prayers'}
+            title={this.setPlayButton() ? 'PLAY' : 'Select Rosary'}
             buttonStyle={this.setPlayButton() > 0 ? styles.done : styles.gray}
             textStyle={styles.text}
             onPress={() => {
               this.done();
-              this.route('PrayerPlayer');
+              //   this.props.navigation.navigate("RosaryPlayer");
+              this.props.navigation.navigate('PrayerPlayer');
             }}
           />
         </View>
@@ -135,7 +134,7 @@ class PrayerList extends React.Component {
               this.route('Home');
             }}
             style={styles.iconContainer}>
-            <Icon2 name='home' size={22} color='#D4D2D2' style={[styles.navIcon, {marginTop: 4}]} />
+            <Icon2 name='home' size={22} color='#D4D2D2' style={[styles.navIcon, { marginTop: 4 }]} />
             <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -202,7 +201,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 3,
-    backgroundColor: 'rgba(52,52,52, 0.7)',
+    backgroundColor: 'rgba(52,52,52, 0.5)',
   },
   unselectedListText: {
     justifyContent: 'flex-start',
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    letterSpacing: 3,
+    letterSpacing: 2,
   },
   footerContainer: {
     backgroundColor: colors.darkgray,
@@ -267,7 +266,7 @@ const styles = StyleSheet.create({
   playIcon: {
     height: 30,
     width: 40,
-    shadowOffset: {width: 1, height: 1},
+    shadowOffset: { width: 1, height: 1 },
     shadowColor: colors.blue,
     shadowOpacity: 1,
     shadowRadius: 10,
@@ -277,7 +276,7 @@ const styles = StyleSheet.create({
     color: colors.blue,
     opacity: 0.8,
     justifyContent: 'center',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowColor: colors.blue,
     textShadowRadius: 10,
   },
@@ -293,5 +292,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  {getPrayersByType, selectPrayer},
-)(PrayerList);
+  { getPrayersByType, selectPrayer },
+)(RosaryList);

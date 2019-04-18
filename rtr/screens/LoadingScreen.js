@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, View, ImageBackground} from 'react-native';
 import {AsyncStorage} from 'react-native';
 import {height, width} from '../constants/Layout';
-import clouds from '../assets/images/cloud-splash.jpg';
+import clouds from '../assets/images/login-background.jpg';
 
 import Animation from 'lottie-react-native';
-import stopwatch from '../assets/animations/stopwatch.json';
+import stopwatch from '../assets/animations/titleAnim.json';
 
 export default class LoadingScreen extends React.Component {
   state = {
@@ -23,12 +23,13 @@ export default class LoadingScreen extends React.Component {
     this.animation.play();
     if (user) {
       setTimeout(() => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Splash');
+        // NEED TO SWAP NAV LOGIC BEFORE PUSHING !!!
       }, !isLoading);
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate('Splash');
-      }, 5000);
+        this.props.navigation.navigate('Home');
+      }, 2000);
     }
   };
 
@@ -40,7 +41,7 @@ export default class LoadingScreen extends React.Component {
             ref={animation => {
               this.animation = animation;
             }}
-            style={{width: 300, height: 300}}
+            style={{width: 350, height: 350}}
             loop={true}
             source={stopwatch}
           />
