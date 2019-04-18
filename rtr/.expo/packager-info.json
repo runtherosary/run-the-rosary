@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://fu-ejf.anonymous.rtr.exp.direct",
   "packagerNgrokUrl": "https://packager.fu-ejf.anonymous.rtr.exp.direct",
-  "ngrokPid": 42761,
+  "ngrokPid": 63004,
   "devToolsPort": 19002,
-  "packagerPort": null,
-  "packagerPid": null
+  "packagerPort": 19001,
+  "packagerPid": 62974
 }

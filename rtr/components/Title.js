@@ -6,7 +6,7 @@ import title from '../assets/animations/titleAnim.json';
 
 export default class Title extends React.Component {
   componentDidMount() {
-    this.animation.play();
+    this.animation.play(0, 164);
   }
 
   render() {
@@ -18,7 +18,7 @@ export default class Title extends React.Component {
             this.animation = animation;
           }}
           style={{height: 120, padding: 0, marginRight: 40}}
-          loop={true}
+          loop={false}
           source={title}
         />
       </View>
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginTop: 40,
-    marginBottom: 40,
+    marginTop: 50,
+    marginBottom: 50,
   },
   title: {
     height: 100,
