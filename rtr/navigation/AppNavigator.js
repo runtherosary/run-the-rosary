@@ -8,6 +8,7 @@ import RosaryList from '../screens/Rosary/RosaryList';
 import RosarySplash from '../screens/Rosary/RosarySplash';
 import PrayerList from '../screens/Prayer/PrayerList';
 import PrayerPlayer from '../screens/Prayer/PrayerPlayer';
+import UserScreen from '../screens/UserScreen';
 
 //   import MainTabNavigator from "./MainTabNavigator";
 
@@ -20,6 +21,7 @@ export default createAppContainer(
     Splash: Splash,
     Login: Login,
     Home: Home,
+    User: UserScreen,
     RosarySplash: RosarySplash,
     PrayerList: PrayerList,
     PrayerPlayer: PrayerPlayer,

@@ -1,26 +1,31 @@
 import React from 'react';
-import { StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity } from 'react-native';
-import { AsyncStorage } from 'react-native';
-import { Button } from 'react-native-elements';
-import { height, width } from '../constants/Layout';
+import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
+import {AsyncStorage} from 'react-native';
+import {Button} from 'react-native-elements';
+import {height, width} from '../constants/Layout';
 import background from '../assets/images/splash-background.jpg';
-import greentrail from "../assets/images/greentrail.jpg";
-import mountain from "../assets/images/mountain.jpg";
+import greentrail from '../assets/images/greentrail.jpg';
+import mountain from '../assets/images/mountain.jpg';
 
 import colors from '../constants/Colors';
-import { connect } from "react-redux";
-import { getAllUsers } from "../ducks/reducers/userReducer";
-import Carousel from "../components/Carousel/Carousel"
+import {connect} from 'react-redux';
+import {getAllUsers} from '../ducks/reducers/userReducer';
+import Carousel from '../components/Carousel/Carousel';
+import Animation from 'lottie-react-native';
+import title from '../assets/animations/titleAnim.json';
 
 class SplashScreen extends React.Component {
   state = {
     user: {},
-    name: 'wick',
   };
 
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount() {
+    this.animation.play(0, 164);
+  }
 
   getStarted = () => {
     this.props.navigation.navigate('Home');
@@ -29,12 +34,20 @@ class SplashScreen extends React.Component {
 
   render() {
     return (
-      <ImageBackground source={mountain} style={{ flex: 1 }}>
+      <ImageBackground source={mountain} style={{flex: 1}}>
         {/* {!this.state.user ? ( */}
         <ScrollView contentContainerStyle={styles.container}>
-          <View style={{ flex: 1, width, marginTop: 40 }}>
+          <View style={{flex: 1, width, marginTop: 40}}>
             <Text style={styles.title}>Run the Rosary</Text>
           </View>
+          <Animation
+            ref={animation => {
+              this.animation = animation;
+            }}
+            //   style={{height: 120, padding: 0, marginRight: 40}}
+            loop={false}
+            source={title}
+          />
           <View style={styles.register}>
             <Button
               title='Register'
@@ -73,7 +86,6 @@ class SplashScreen extends React.Component {
           </View>
         </ScrollView>
         {/* <Carousel carousel={this.carousel} /> */}
-
       </ImageBackground>
     );
   }
@@ -93,15 +105,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Avenir Next',
-    fontWeight: "500",
+    fontWeight: '500',
     textShadowColor: 'gray',
-    textShadowOffset: { width: -1, height: 1 },
+    textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 2,
     textAlign: 'center',
     color: 'white',
     fontSize: 40,
     marginTop: 215,
-    marginBottom: 40
+    marginBottom: 40,
   },
 
   start: {
@@ -119,5 +131,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getAllUsers },
+  {getAllUsers},
 )(SplashScreen);

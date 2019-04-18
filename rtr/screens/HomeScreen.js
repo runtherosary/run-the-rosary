@@ -10,6 +10,8 @@ import Title from '../components/Title';
 import Animation from 'lottie-react-native';
 import title from '../assets/animations/titleAnim.json';
 import rosary from '../assets/images/rosary.png';
+import pray from '../assets/images/praying-hands.png';
+import today from '../assets/images/login-background.jpg';
 
 import Footer from '../components/Footer/Footer';
 
@@ -19,9 +21,9 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
-  //   componentDidMount() {
-  //     this.animation.play();
-  //   }
+  componentDidMount() {
+    this.animation.play(0, 164);
+  }
 
 <<<<<<< HEAD
 		return (
@@ -112,12 +114,30 @@ export default class HomeScreen extends React.Component {
   render() {
     const {screen} = this.state;
     const icon1 = <Icon name='linkedin' size={60} color='white' />;
+    const play = (
+      <Animation
+        ref={animation => {
+          this.animation = animation;
+        }}
+        // style={{height: 200, width}}
+        loop={false}
+        source={title}
+      />
+    );
+    const todaysRosary = (
+      <Text>
+        "Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a
+        little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when you put quarters
+        in it? No? Well, that's what you see at a toy store. And you must think you're in a toy store, because you're here shopping for an
+        infant named Jeb." - Samuel L. 31:17
+      </Text>
+    );
 
     return (
       <ImageBackground source={homescreen} style={{flex: 1, opacity: 0.85}}>
         <View style={styles.headerContainer}>
           <TouchableOpacity
-            style={{paddingLeft: 20}}
+            style={{paddingLeft: 30}}
             onPress={() => {
               this.route('Home');
             }}>
@@ -125,19 +145,17 @@ export default class HomeScreen extends React.Component {
           </TouchableOpacity>
           <Text>Run the Rosary</Text>
           <TouchableOpacity
-            style={{paddingRight: 20}}
+            style={{paddingRight: 30}}
             onPress={() => {
-              this.route('PrayerPlayer');
+              this.route('User');
             }}>
             <Icon2 name='user' size={30} color='#fff' />
           </TouchableOpacity>
         </View>
-        <Title />
         <ScrollView>
           <View
             style={{
               flex: 1,
-              flexDirection: 'column',
               alignContent: 'center',
               justifyContent: 'center',
             }}>
@@ -150,35 +168,29 @@ export default class HomeScreen extends React.Component {
                 justifyContent: 'center',
               }}>
               <Button
+                title={todaysRosary}
+                titleStyle={styles.todayText}
+                onPress={() => this.route('RosaryList')}
+                buttonStyle={styles.todayButton}
+              />
+              <Button
+                icon={play}
+                onPress={() => this.route('PrayerPlayer')}
+                buttonStyle={[styles.playButton, {backgroundColor: 'transparent'}]}
+              />
+              <Button
                 title='Rosary'
                 titleStyle={styles.buttonText}
                 icon={<Image source={rosary} style={{height: 100, width: 100}} />}
                 onPress={() => this.route('RosaryList')}
-                buttonStyle={styles.lgButton}
+                buttonStyle={styles.prayerButton}
               />
               <Button
                 title='Prayer'
                 titleStyle={styles.buttonText}
+                icon={<Image source={pray} style={{height: 100, width: 100}} />}
                 onPress={() => this.route('PrayerList')}
-                buttonStyle={styles.lgButton}
-              />
-              <Button
-                title="Today's Rosary"
-                titleStyle={styles.buttonText}
-                onPress={() => this.route('RosaryList')}
-                buttonStyle={styles.xlgButton}
-              />
-              <Button
-                title='Prayer'
-                titleStyle={styles.buttonText}
-                onPress={() => this.route('PrayerList')}
-                buttonStyle={styles.mdButton}
-              />
-              <Button
-                title='Prayer'
-                titleStyle={styles.buttonText}
-                onPress={() => this.route('PrayerList')}
-                buttonStyle={styles.mdButton}
+                buttonStyle={styles.prayerButton}
               />
             </View>
           </View>
@@ -186,7 +198,7 @@ export default class HomeScreen extends React.Component {
         <View style={styles.footerContainer}>
           <TouchableOpacity
             onPress={() => {
-              this.route('Home');
+              this.route('Splash');
             }}>
             <Icon2 name='home' size={30} color='#fff' />
           </TouchableOpacity>
@@ -221,7 +233,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: 'black',
-    opacity: 0.8,
     width,
     height: height / 10,
     flexDirection: 'row',
@@ -232,30 +243,38 @@ const styles = StyleSheet.create({
   home: {
     margin: 20,
   },
-  mdButton: {
-    opacity: 0.8,
-    backgroundColor: colors.blue,
-    height: 130,
-    width: 180,
-    margin: 10,
+  playButton: {
+    backgroundColor: 'transparent',
+    borderRadius: 5,
+    borderColor: colors.blue,
+    borderWidth: 2,
+    height: 230,
+    width: 270,
+    marginVertical: 30,
+    marginHorizontal: 30,
   },
-  lgButton: {
+  prayerButton: {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    opacity: 0.8,
+    opacity: 0.9,
     backgroundColor: colors.blue,
     height: 225,
     width: 180,
     margin: 10,
+    borderRadius: 5,
   },
-  xlgButton: {
-    opacity: 0.8,
-    backgroundColor: colors.blue,
-    height: 180,
+  todayButton: {
+    opacity: 0.6,
+    backgroundColor: colors.darkgray,
+    height: 150,
     width: 375,
-    margin: 10,
+    marginVertical: 20,
   },
   buttonText: {
+    fontWeight: 'bold',
+  },
+  todayText: {
+    fontSize: 12,
     fontWeight: 'bold',
   },
   footerContainer: {
