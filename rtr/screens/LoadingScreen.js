@@ -29,7 +29,7 @@ export default class LoadingScreen extends React.Component {
     } else {
       setTimeout(() => {
         this.props.navigation.navigate('Home');
-      }, 6000);
+      }, 2000);
     }
   };
 
