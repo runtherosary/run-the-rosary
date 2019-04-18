@@ -42,6 +42,14 @@ export default class HomeScreen extends React.Component {
         source={title}
       />
     );
+    const todaysRosary = (
+      <Text>
+        "Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a
+        little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when you put quarters
+        in it? No? Well, that's what you see at a toy store. And you must think you're in a toy store, because you're here shopping for an
+        infant named Jeb." - Samuel L. 31:17
+      </Text>
+    );
 
     return (
       <ImageBackground source={homescreen} style={{flex: 1, opacity: 0.85}}>
@@ -78,10 +86,10 @@ export default class HomeScreen extends React.Component {
                 justifyContent: 'center',
               }}>
               <Button
-                title="Today's Rosary"
-                titleStyle={styles.buttonText}
+                title={todaysRosary}
+                titleStyle={styles.todayText}
                 onPress={() => this.route('RosaryList')}
-                buttonStyle={[styles.todayButton, {ImageBackground: today}]}
+                buttonStyle={styles.todayButton}
               />
               <Button
                 icon={play}
@@ -142,7 +150,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: 'black',
-    opacity: 0.8,
     width,
     height: height / 10,
     flexDirection: 'row',
@@ -171,16 +178,20 @@ const styles = StyleSheet.create({
     height: 225,
     width: 180,
     margin: 10,
+    borderRadius: 5,
   },
   todayButton: {
-    opacity: 0.9,
-    backgroundColor: colors.blue,
-    opacity: 0.9,
+    opacity: 0.6,
+    backgroundColor: colors.darkgray,
     height: 150,
     width: 375,
     marginVertical: 20,
   },
   buttonText: {
+    fontWeight: 'bold',
+  },
+  todayText: {
+    fontSize: 12,
     fontWeight: 'bold',
   },
   footerContainer: {
