@@ -23,6 +23,7 @@ export default class HomeScreen extends React.Component {
 
 	componentDidMount() {
 		this.animation.play(0, 164);
+		this.animationb.play(145, 164);
 	}
 
 	route(path) {
@@ -37,9 +38,18 @@ export default class HomeScreen extends React.Component {
 				ref={animation => {
 					this.animation = animation;
 				}}
-				// style={{height: 200, width}}
 				loop={false}
 				source={title}
+			/>
+		);
+		const playRoute = (
+			<Animation
+				ref={animation => {
+					this.animationb = animation;
+				}}
+				loop={false}
+				source={title}
+				style={styles.playIcon}
 			/>
 		);
 		const todaysRosary = (
@@ -50,6 +60,9 @@ export default class HomeScreen extends React.Component {
 				infant named Jeb." - Samuel L. 31:17
       </Text>
 		);
+
+		const rosaryBeads = <Image source={rosary} style={{ height: 20, width: 20, marginBottom: 4, marginTop: 4 }} />;
+		const prayerHands = <Image source={pray} style={{ height: 20, width: 20, marginBottom: 4, marginTop: 4 }} />;
 
 		return (
 			<ImageBackground source={homescreen} style={{ flex: 1, opacity: 0.85 }}>
@@ -86,7 +99,7 @@ export default class HomeScreen extends React.Component {
 								justifyContent: 'center',
 							}}>
 							<Button
-								title={todaysRosary}
+								title='todaysRosary'
 								titleStyle={styles.todayText}
 								onPress={() => this.route('RosaryList')}
 								buttonStyle={styles.todayButton}
@@ -97,16 +110,16 @@ export default class HomeScreen extends React.Component {
 								buttonStyle={[styles.playButton, { backgroundColor: 'transparent' }]}
 							/>
 							<Button
-								title='Rosary'
+								title='ROSARIES'
 								titleStyle={styles.buttonText}
-								icon={<Image source={rosary} style={{ height: 100, width: 100 }} />}
+								icon={<Image source={rosary} style={{ height: 80, width: 80 }} />}
 								onPress={() => this.route('RosaryList')}
 								buttonStyle={styles.prayerButton}
 							/>
 							<Button
-								title='Prayer'
+								title='PRAYERS'
 								titleStyle={styles.buttonText}
-								icon={<Image source={pray} style={{ height: 100, width: 100 }} />}
+								icon={<Image source={pray} style={{ height: 80, width: 80 }} />}
 								onPress={() => this.route('PrayerList')}
 								buttonStyle={styles.prayerButton}
 							/>
@@ -116,27 +129,35 @@ export default class HomeScreen extends React.Component {
 				<View style={styles.footerContainer}>
 					<TouchableOpacity
 						onPress={() => {
-							this.route('Splash');
-						}}>
-						<Icon2 name='home' size={30} color='#fff' />
+							this.route('Home');
+						}}
+						style={styles.iconContainer}>
+						<Icon2 name='home' size={22} color='#D4D2D2' style={[styles.navIcon, { marginTop: 4 }]} />
+						<Text style={styles.navText}>Home</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => {
 							this.route('RosaryList');
-						}}>
-						<Icon2 name='book' size={30} color='#fff' />
+						}}
+						style={styles.iconContainer}>
+						{rosaryBeads}
+						<Text style={styles.navText}>Rosaries</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => {
 							this.route('PrayerList');
-						}}>
-						<Icon2 name='plus' size={30} color='#fff' />
+						}}
+						style={styles.iconContainer}>
+						{prayerHands}
+						<Text style={styles.navText}>Prayers</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						onPress={() => {
 							this.route('PrayerPlayer');
-						}}>
-						<Icon2 name='play' size={30} color='#fff' />
+						}}
+						style={styles.iconContainer}>
+						{playRoute}
+						<Text style={styles.playText}>Play</Text>
 					</TouchableOpacity>
 				</View>
 			</ImageBackground>
@@ -162,9 +183,13 @@ const styles = StyleSheet.create({
 	},
 	playButton: {
 		backgroundColor: 'transparent',
+		shadowOffset: { width: 1, height: 1 },
+		shadowColor: colors.blue,
+		shadowOpacity: 1,
+		shadowRadius: 10,
 		borderRadius: 5,
 		borderColor: colors.blue,
-		borderWidth: 2,
+		borderWidth: 1,
 		height: 230,
 		width: 270,
 		marginVertical: 30,
@@ -173,7 +198,11 @@ const styles = StyleSheet.create({
 	prayerButton: {
 		flexDirection: 'column',
 		justifyContent: 'space-evenly',
-		opacity: 0.9,
+		shadowOffset: { width: 1, height: 1 },
+		shadowColor: colors.blue,
+		shadowOpacity: 0.9,
+		shadowRadius: 3,
+		opacity: 0.8,
 		backgroundColor: colors.blue,
 		height: 225,
 		width: 180,
@@ -189,6 +218,9 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		fontWeight: 'bold',
+		fontSize: 20,
+		opacity: 0.8,
+		letterSpacing: 3,
 	},
 	todayText: {
 		fontSize: 12,
@@ -203,5 +235,33 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		paddingHorizontal: 50,
+	},
+	iconContainer: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		paddingBottom: 12,
+	},
+	navText: {
+		fontSize: 9,
+		color: 'black',
+		opacity: 0.8,
+		justifyContent: 'center',
+	},
+	playIcon: {
+		height: 30,
+		width: 40,
+		shadowOffset: { width: 1, height: 1 },
+		shadowColor: colors.blue,
+		shadowOpacity: 1,
+		shadowRadius: 10,
+	},
+	playText: {
+		fontSize: 9,
+		color: colors.blue,
+		opacity: 0.8,
+		justifyContent: 'center',
+		textShadowOffset: { width: 1, height: 1 },
+		textShadowColor: colors.blue,
+		textShadowRadius: 10,
 	},
 });

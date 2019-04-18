@@ -50,9 +50,7 @@ class AudioPlayer extends Component {
 
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.playingFrom}>Playing from Prayers</Text>
-        </View>
+        <Text style={styles.playingFrom}>Playing from Prayers</Text>
         <Image source={art} style={styles.art} />
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{title ? title : 'Some test title'}</Text>
@@ -66,10 +64,11 @@ class AudioPlayer extends Component {
           showDebug={false}
           showBackButton={false}
           repeat={this.state.repeatOn}
-          timeStampStyle={{
-            color: 'white',
-            fontSize: 15,
-          }}
+          showTimeStamp={false}
+          // timeStampStyle={{
+          //   color: 'white',
+          //   fontSize: 15,
+          // }}
           playbackSlider={renderProps => {
             return (
               <Slider
@@ -90,34 +89,32 @@ class AudioPlayer extends Component {
 
 const styles = {
   container: {
+    flex: 1,
     alignItems: 'center',
-    margin: 50,
+    justifyContent: 'center',
   },
   playingFrom: {
     color: 'white',
     fontSize: 12,
-    marginBottom: 70,
+    marginTop: 25,
+    marginBottom: 15,
   },
   art: {
-    height: height / 2.5,
-    width: width - 50,
-    marginBottom: 80,
+    height: width - 60,
+    width: width - 60,
   },
   titleContainer: {
-    width,
+    width: width - 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 50,
+    marginBottom: 30,
   },
   title: {
-    marginLeft: 30,
-
     color: 'white',
     fontSize: 25,
-    marginBottom: 40,
   },
-  favorite: {
-    marginRight: 25,
-  },
+  favorite: {},
 };
 
 const mapStateToProps = state => {
