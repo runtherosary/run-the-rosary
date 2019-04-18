@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity, Platform} from 'react-native';
 import {Button} from 'react-native-elements';
 import {width} from '../../constants/Layout';
 import colors from '../../constants/Colors';
@@ -21,7 +21,7 @@ class PrayerList extends React.Component {
   };
 
   componentDidMount = () => {
-    this.props.getPrayersByType('General');
+    this.props.getPrayersByType('General', Platform.OS);
   };
 
   done = () => {

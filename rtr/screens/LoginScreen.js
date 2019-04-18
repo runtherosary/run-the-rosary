@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground} from 'react-native';
+import {StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground, Platform} from 'react-native';
 import {AsyncStorage} from 'react-native';
 import background from '../assets/images/login-background.jpg';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -41,6 +41,7 @@ class LoginScreen extends React.Component {
     const credentials = {
       email,
       password,
+      platform: Platform.OS
     };
     const registerCredentials = {
       firstName,
