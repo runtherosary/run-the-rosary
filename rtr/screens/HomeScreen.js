@@ -35,7 +35,7 @@ export default class HomeScreen extends React.Component {
 							}}>
 							<Button
 								title={icon1}
-								onPress={() => this.props.navigation.navigate('RosarySplash')}
+								onPress={() => this.props.navigation.navigate('RosaryList')}
 								buttonStyle={{
 									opacity: .8,
 									backgroundColor: colors.blue,
@@ -67,7 +67,7 @@ export default class HomeScreen extends React.Component {
 							}}>
 							<Button
 								title={icon1}
-								onPress={() => this.props.navigation.navigate('RosarySplash')}
+								onPress={() => this.props.navigation.navigate('RosaryList')}
 								buttonStyle={{
 									opacity: .8,
 									backgroundColor: colors.blue,
