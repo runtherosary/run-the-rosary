@@ -1,12 +1,17 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
+import {StyleSheet, Image, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
 import {Button} from 'react-native-elements';
 import {width, height} from '../../constants/Layout';
 import colors from '../../constants/Colors';
-import Icon from 'react-native-vector-icons/AntDesign';
-import background from '../../assets/images/login-background.jpg';
+import Icon from 'react-native-vector-icons/Feather';
+import Icon2 from 'react-native-vector-icons/AntDesign';
+import background from '../../assets/images/homescreen.jpeg';
 import {connect} from 'react-redux';
 import {getPrayersByType, selectPrayer} from '../../ducks/reducers/prayerReducer';
+import Animation from 'lottie-react-native';
+import title from '../../assets/animations/titleAnim.json';
+import rosary from '../../assets/images/rosary.png';
+import pray from '../../assets/images/praying-hands.png';
 import Footer from '../../components/Footer/Footer';
 
 class PrayerList extends React.Component {
@@ -24,6 +29,7 @@ class PrayerList extends React.Component {
 
   componentDidMount = () => {
     this.props.getPrayersByType('General');
+    this.animationb.play(145, 164);
   };
 
   done = () => {
@@ -55,6 +61,21 @@ class PrayerList extends React.Component {
     const {prayers, prayersLoading} = this.props;
     const {screen} = this.state;
 
+    const back = <Icon2 name='arrowleft' size={30} color='#fff' />;
+    const playRoute = (
+      <Animation
+        ref={animation => {
+          this.animationb = animation;
+        }}
+        loop={false}
+        source={title}
+        style={styles.playIcon}
+      />
+    );
+
+    const rosaryBeads = <Image source={rosary} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
+    const prayerHands = <Image source={pray} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
+
     const list = !prayersLoading
       ? prayers.map((e, i) => {
           return (
@@ -83,11 +104,18 @@ class PrayerList extends React.Component {
 
     return (
       <ImageBackground style={styles.container} source={background}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => this.route('Home')}>
-            <Icon name='arrowleft' size={30} color='#fff' />
+        <View style={styles.headerContainer}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.back}>
+            {back}
           </TouchableOpacity>
-          <Text style={[styles.text, {marginLeft: 70}]}>Select Prayers</Text>
+          <Text style={styles.headerText}>Select Prayers</Text>
+          <TouchableOpacity
+            style={{paddingRight: 30}}
+            onPress={() => {
+              this.route('User');
+            }}>
+            <Icon2 name='user' size={30} color='#fff' />
+          </TouchableOpacity>
         </View>
         <ScrollView contentContainerStyle={styles.scrollContainer}>{list}</ScrollView>
         <View styles={styles.footer}>
@@ -105,26 +133,34 @@ class PrayerList extends React.Component {
           <TouchableOpacity
             onPress={() => {
               this.route('Home');
-            }}>
-            <Icon name='home' size={30} color='#fff' />
+            }}
+            style={styles.iconContainer}>
+            <Icon2 name='home' size={22} color='#D4D2D2' style={[styles.navIcon, {marginTop: 4}]} />
+            <Text style={styles.navText}>Home</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               this.route('RosaryList');
-            }}>
-            <Icon name='book' size={30} color='#fff' />
+            }}
+            style={styles.iconContainer}>
+            {rosaryBeads}
+            <Text style={styles.navText}>Rosaries</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               this.route('PrayerList');
-            }}>
-            <Icon name='plus' size={30} color='#fff' />
+            }}
+            style={styles.iconContainer}>
+            {prayerHands}
+            <Text style={styles.navText}>Prayers</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
               this.route('PrayerPlayer');
-            }}>
-            <Icon name='play' size={30} color='#fff' />
+            }}
+            style={styles.iconContainer}>
+            {playRoute}
+            <Text style={styles.playText}>Play</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -140,11 +176,24 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  header: {
+  headerContainer: {
+    backgroundColor: colors.darkgray,
+    width,
+    height: height / 10,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 50,
-    marginHorizontal: 20,
+    justifyContent: 'space-between',
+    paddingTop: 35,
+    opacity: 0.9,
+  },
+  headerText: {
+    fontSize: 18,
+    color: 'white',
+    letterSpacing: 4,
+  },
+  back: {
+    justifyContent: 'flex-start',
+    marginLeft: 40,
   },
   listContainer: {
     flexDirection: 'row',
@@ -153,7 +202,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 3,
-    backgroundColor: 'rgba(52,52,52, 0.5)',
+    backgroundColor: 'rgba(52,52,52, 0.7)',
   },
   unselectedListText: {
     justifyContent: 'flex-start',
@@ -173,20 +222,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   done: {
-    width,
-    backgroundColor: 'green',
+    opacity: 0.9,
+    width: width - 40,
+    backgroundColor: colors.blue,
     height: 50,
+    marginBottom: 20,
+    marginHorizontal: 20,
   },
   gray: {
-    width,
+    opacity: 0.8,
+    width: width - 40,
     backgroundColor: 'gray',
     height: 50,
+    marginBottom: 20,
+    marginHorizontal: 20,
   },
   text: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-    letterSpacing: 2,
+    letterSpacing: 3,
   },
   footerContainer: {
     backgroundColor: colors.darkgray,
@@ -197,6 +252,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 50,
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 12,
+  },
+  navText: {
+    fontSize: 9,
+    color: 'black',
+    opacity: 0.8,
+    justifyContent: 'center',
+  },
+  playIcon: {
+    height: 30,
+    width: 40,
+    shadowOffset: {width: 1, height: 1},
+    shadowColor: colors.blue,
+    shadowOpacity: 1,
+    shadowRadius: 10,
+  },
+  playText: {
+    fontSize: 9,
+    color: colors.blue,
+    opacity: 0.8,
+    justifyContent: 'center',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowColor: colors.blue,
+    textShadowRadius: 10,
   },
 });
 
