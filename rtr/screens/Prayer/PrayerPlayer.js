@@ -61,7 +61,7 @@ class PrayerPlayer extends React.Component {
           <TouchableOpacity
             style={{paddingRight: 30}}
             onPress={() => {
-              this.route('User');
+              this.props.navigation.navigate('User');
             }}>
             <Icon2 name='user' size={30} color='#fff' />
           </TouchableOpacity>
@@ -70,7 +70,7 @@ class PrayerPlayer extends React.Component {
         <View style={styles.footerContainer}>
           <TouchableOpacity
             onPress={() => {
-              this.route('Home');
+              this.props.navigation.navigate('Home');
             }}
             style={styles.iconContainer}>
             <Icon2 name='home' size={22} color='#D4D2D2' style={[styles.navIcon, {marginTop: 4}]} />
@@ -78,7 +78,7 @@ class PrayerPlayer extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.route('RosaryList');
+              this.props.navigation.navigate('RosaryList');
             }}
             style={styles.iconContainer}>
             {rosaryBeads}
@@ -86,7 +86,7 @@ class PrayerPlayer extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.route('PrayerList');
+              this.props.navigation.navigate('PrayerList');
             }}
             style={styles.iconContainer}>
             {prayerHands}
@@ -94,7 +94,7 @@ class PrayerPlayer extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.route('PrayerPlayer');
+              this.props.navigation.navigate('PrayerPlayer');
             }}
             style={styles.iconContainer}>
             {playRoute}
