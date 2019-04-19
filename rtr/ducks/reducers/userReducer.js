@@ -66,12 +66,10 @@ export function register({firstName, lastName, email, password}) {
   }
 }
 
-export function login({email, password, platform}) {
-let url = platform === "ios" ? "localhost" : "204.0.69.47"
-
+export function login({email, password}) {
   return {
     type: LOGIN,
-    payload: axios.post(`http://${url}:3001/login`, { email, password })
+    payload: axios.post(`http://localhost:3001/login`, { email, password })
   }
 }
 

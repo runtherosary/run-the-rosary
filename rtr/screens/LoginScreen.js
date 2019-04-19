@@ -41,8 +41,7 @@ class LoginScreen extends React.Component {
 
     const credentials = {
       email,
-      password,
-      platform: Platform.OS
+      password
     };
     const registerCredentials = {
       firstName,
