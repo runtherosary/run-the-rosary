@@ -23,12 +23,12 @@ export default class LoadingScreen extends React.Component {
     this.animation.play();
     if (user) {
       setTimeout(() => {
-        this.props.navigation.navigate('Splash');
+        this.props.navigation.navigate('Home');
         // NEED TO SWAP NAV LOGIC BEFORE PUSHING !!!
       }, !isLoading);
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Splash');
       }, 2000);
     }
   };

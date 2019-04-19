@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import background from '../assets/images/login-background.jpg';
 import greentrail from '../assets/images/greentrail.jpg';
@@ -39,16 +39,16 @@ class LoginScreen extends React.Component {
         let { email, password, firstName, lastName, signUp } = this.state;
         let { login, register } = this.props;
 
-        const credentials = {
-            email,
-            password,
-        };
-        const registerCredentials = {
-            firstName,
-            lastName,
-            email,
-            password,
-        };
+    const credentials = {
+      email,
+      password
+    };
+    const registerCredentials = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
 
         if (!signUp) {
             login(credentials);
