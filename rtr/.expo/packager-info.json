@@ -1,30 +1,9 @@
 {
-<<<<<<< HEAD
   "devToolsPort": 19002,
-=======
-<<<<<<< HEAD
->>>>>>> master
-  "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "devToolsPort": 19002,
-  "packagerPort": null,
-<<<<<<< HEAD
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
-=======
-  "packagerPid": null
-=======
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://fu-ejf.anonymous.rtr.exp.direct",
-  "packagerNgrokUrl": "https://packager.fu-ejf.anonymous.rtr.exp.direct",
-  "ngrokPid": 88598,
-  "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 88581
->>>>>>> master
->>>>>>> master
+  "packagerPid": 4717,
+  "expoServerNgrokUrl": "https://ti-6vp.anonymous.rtr.exp.direct",
+  "packagerNgrokUrl": "https://packager.ti-6vp.anonymous.rtr.exp.direct",
+  "ngrokPid": 4737
 }

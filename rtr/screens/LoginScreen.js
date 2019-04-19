@@ -1,11 +1,6 @@
 import React from 'react';
-<<<<<<< HEAD
-import {StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground, Platform} from 'react-native';
-import {AsyncStorage} from 'react-native';
-=======
-import { StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableHighlight, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
 import { AsyncStorage } from 'react-native';
->>>>>>> master
 import background from '../assets/images/login-background.jpg';
 import greentrail from '../assets/images/greentrail.jpg';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -44,7 +39,6 @@ class LoginScreen extends React.Component {
         let { email, password, firstName, lastName, signUp } = this.state;
         let { login, register } = this.props;
 
-<<<<<<< HEAD
     const credentials = {
       email,
       password,
@@ -56,18 +50,6 @@ class LoginScreen extends React.Component {
       email,
       password,
     };
-=======
-        const credentials = {
-            email,
-            password,
-        };
-        const registerCredentials = {
-            firstName,
-            lastName,
-            email,
-            password,
-        };
->>>>>>> master
 
         if (!signUp) {
             login(credentials);

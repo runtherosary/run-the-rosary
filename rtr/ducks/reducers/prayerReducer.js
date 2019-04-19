@@ -86,12 +86,10 @@ export default function(state = initialState, action) {
   }
 }
 
-export function getPrayersByType(type, platform) {
-  let url = platform === "ios" ? "localhost" : "10.0.253.173"
-
+export function getPrayersByType(type) {
   return {
     type: GET_PRAYERS_BY_TYPE,
-    payload: axios(`http://${url}/prayers/type/${type}`),
+    payload: axios(`http://localhost:3001/prayers/type/${type}`),
   };
 }
 export function getPrayersByID(id) {
