@@ -103,7 +103,7 @@ class RosaryList extends React.Component {
     return (
       <ImageBackground style={styles.container} source={background}>
         <View style={styles.headerContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('PrayerList')} style={styles.back}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.back}>
             {back}
           </TouchableOpacity>
           <Text style={styles.headerText}>Select Rosary</Text>
@@ -123,8 +123,10 @@ class RosaryList extends React.Component {
             textStyle={styles.text}
             onPress={() => {
               this.done();
-              //   this.props.navigation.navigate("RosaryPlayer");
-              this.props.navigation.navigate('PrayerPlayer');
+              if (this.setPlayButton()) {
+                //   this.props.navigation.navigate("RosaryPlayer");
+                this.props.navigation.navigate('PrayerPlayer');
+              }
             }}
           />
         </View>

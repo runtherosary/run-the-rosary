@@ -35,18 +35,17 @@ class SplashScreen extends React.Component {
   render() {
     return (
       <ImageBackground source={mountain} style={{flex: 1}}>
-        {/* {!this.state.user ? ( */}
         <ScrollView contentContainerStyle={styles.container}>
           <View style={{flex: 1, width, marginTop: 40}}>
             <Text style={styles.title}>Run the Rosary</Text>
           </View>
           <Animation
-            ref={animation => {
+            ref={(animation) => {
               this.animation = animation;
             }}
-            //   style={{height: 120, padding: 0, marginRight: 40}}
             loop={false}
             source={title}
+            speed={0.7}
           />
           <View style={styles.register}>
             <Button
@@ -67,7 +66,7 @@ class SplashScreen extends React.Component {
             />
             <Button
               title='Login'
-              onPress={() => this.props.navigation.navigate('Login')}
+              onPress={() => this.props.navigation.navigate('Home')}
               buttonStyle={{
                 backgroundColor: 'transparent',
                 borderColor: 'white',
@@ -85,7 +84,6 @@ class SplashScreen extends React.Component {
             />
           </View>
         </ScrollView>
-        {/* <Carousel carousel={this.carousel} /> */}
       </ImageBackground>
     );
   }
@@ -122,14 +120,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: state.userReducer.users,
     user: state.userReducer.users,
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {getAllUsers},
-)(SplashScreen);
+export default connect(mapStateToProps, {getAllUsers})(SplashScreen);

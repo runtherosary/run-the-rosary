@@ -35,7 +35,7 @@ export default class HomeScreen extends React.Component {
     const icon1 = <Icon name='linkedin' size={60} color='white' />;
     const play = (
       <Animation
-        ref={animation => {
+        ref={(animation) => {
           this.animation = animation;
         }}
         loop={false}
@@ -44,7 +44,7 @@ export default class HomeScreen extends React.Component {
     );
     const playRoute = (
       <Animation
-        ref={animation => {
+        ref={(animation) => {
           this.animationb = animation;
         }}
         loop={false}
@@ -52,14 +52,7 @@ export default class HomeScreen extends React.Component {
         style={styles.playIcon}
       />
     );
-    const todaysRosary = (
-      <Text>
-        "Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a
-        little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when you put quarters
-        in it? No? Well, that's what you see at a toy store. And you must think you're in a toy store, because you're here shopping for an
-        infant named Jeb." - Samuel L. 31:17
-      </Text>
-    );
+    const todaysRosary = <Text>TODAY'S PRAYER</Text>;
 
     const rosaryBeads = <Image source={rosary} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
     const prayerHands = <Image source={pray} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
@@ -99,7 +92,7 @@ export default class HomeScreen extends React.Component {
                 justifyContent: 'center',
               }}>
               <Button
-                title='todaysRosary'
+                title={todaysRosary}
                 titleStyle={styles.todayText}
                 onPress={() => this.route('RosaryList')}
                 buttonStyle={styles.todayButton}
@@ -217,10 +210,10 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   buttonText: {
-    fontWeight: 'bold',
+    fontWeight: '900',
     fontSize: 20,
-    opacity: 0.8,
-    letterSpacing: 3,
+    opacity: 0.9,
+    letterSpacing: 6,
   },
   todayText: {
     fontSize: 12,

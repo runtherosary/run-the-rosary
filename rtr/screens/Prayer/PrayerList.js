@@ -14,6 +14,11 @@ import rosary from '../../assets/images/rosary.png';
 import pray from '../../assets/images/praying-hands.png';
 import Footer from '../../components/Footer/Footer';
 
+// NOTES && TODO:
+// - ADD LOADING STATE TO THE LIST MAP
+//    - SET A CONDITIONAL AND IT WOULD BE NICE TO USE A LOTTIE ANIMATION, BUT WE CAN DECIDE ON SOMETHING AT A LATER DATE
+
+// PRAYER LIST SCREEN
 class PrayerList extends React.Component {
   state = {
     screen: 'PrayerList',
@@ -47,7 +52,7 @@ class PrayerList extends React.Component {
     let {prayers} = this.props;
 
     for (var i = 0; i < prayers.length; i++) {
-      if (prayers.some(e => e.selected)) {
+      if (prayers.some((e) => e.selected)) {
         return true;
       }
     }
@@ -64,7 +69,7 @@ class PrayerList extends React.Component {
     const back = <Icon2 name='arrowleft' size={30} color='#fff' />;
     const playRoute = (
       <Animation
-        ref={animation => {
+        ref={(animation) => {
           this.animationb = animation;
         }}
         loop={false}
@@ -125,7 +130,9 @@ class PrayerList extends React.Component {
             textStyle={styles.text}
             onPress={() => {
               this.done();
-              this.route('PrayerPlayer');
+              if (this.setPlayButton()) {
+                this.route('PrayerPlayer');
+              }
             }}
           />
         </View>
@@ -283,7 +290,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     prayers: state.prayerReducer.prayers,
     selectedPrayers: state.prayerReducer.selectedPrayers,
@@ -291,7 +298,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  {getPrayersByType, selectPrayer},
-)(PrayerList);
+export default connect(mapStateToProps, {getPrayersByType, selectPrayer})(PrayerList);

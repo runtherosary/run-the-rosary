@@ -19,10 +19,6 @@ export default class UserScreen extends React.Component {
     header: null,
   };
 
-  //   componentDidMount() {
-  //     this.animation.play();
-  //   }
-
   route(path) {
     this.props.navigation.navigate(path);
   }
@@ -50,8 +46,7 @@ export default class UserScreen extends React.Component {
             <Icon2 name='user' size={30} color='#fff' />
           </TouchableOpacity>
         </View>
-        {/* <Title /> */}
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
           <Text style={{color: '#fff'}}>User Profile</Text>
         </ScrollView>
         <View style={styles.footerContainer}>
@@ -102,31 +97,9 @@ const styles = StyleSheet.create({
   home: {
     margin: 20,
   },
-  mdButton: {
-    opacity: 0.8,
-    backgroundColor: colors.blue,
-    height: 130,
-    width: 180,
-    margin: 10,
-  },
-  lgButton: {
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    opacity: 0.8,
-    backgroundColor: colors.blue,
-    height: 225,
-    width: 180,
-    margin: 10,
-  },
-  xlgButton: {
-    opacity: 0.8,
-    backgroundColor: colors.blue,
-    height: 180,
-    width: 375,
-    margin: 10,
-  },
-  buttonText: {
-    fontWeight: 'bold',
+  scrollContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   footerContainer: {
     backgroundColor: colors.darkgray,

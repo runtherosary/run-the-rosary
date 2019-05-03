@@ -28,6 +28,10 @@ class PrayerPlayer extends React.Component {
     this.animationb.play(145, 164);
   };
 
+  route(path) {
+    this.props.navigation.navigate(path);
+  }
+
   render() {
     const {prayers} = this.props;
     const back = <Icon2 name='arrowleft' size={30} color='#fff' />;

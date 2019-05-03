@@ -28,7 +28,7 @@ export default class LoadingScreen extends React.Component {
       }, !isLoading);
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Splash');
       }, 2000);
     }
   };
