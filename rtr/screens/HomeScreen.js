@@ -54,7 +54,7 @@ export default class HomeScreen extends React.Component {
   render() {
     const {screen, today} = this.state;
     const icon1 = <Icon name='linkedin' size={60} color={colors.white} />;
-    const arrowRightSmall = <Icon name='arrow-right' size={22} color={colors.white} />;
+    const arrowRightSmall = <Icon name='arrow-right' size={15} color={colors.blue} />;
     const arrowRight = <Icon name='arrow-right' size={25} color={colors.white} style={{marginBottom: 15}} />;
     const play = (
       <Animation
@@ -122,11 +122,9 @@ export default class HomeScreen extends React.Component {
               {/* TODAY'S ROSARY */}
               <TouchableOpacity onPress={() => this.route('RosaryList')} style={styles.todayOpacity}>
                 <View style={styles.todayText}>
-                  <Text style={styles.todayText}>Today's Rosary</Text>
+                  <Text style={styles.todayText}>Today's Rosary {arrowRightSmall}</Text>
                 </View>
-                <Text style={styles.todayDate}>
-                  {today} {arrowRightSmall}
-                </Text>
+                <Text style={styles.todayDate}>{today}</Text>
               </TouchableOpacity>
 
               {/* PLAY BUTTON */}
@@ -137,22 +135,20 @@ export default class HomeScreen extends React.Component {
                 {/* ROSARIES */}
                 <TouchableOpacity onPress={() => this.route('RosaryList')} style={styles.prayerButton}>
                   <View style={styles.prayerText}>
-                    <Text style={styles.prayerTex}>Rosaries</Text>
+                    <Text style={styles.prayerTex}>Rosaries {arrowRightSmall}</Text>
                   </View>
                   <View style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>{rosaryLink}</Text>
-                    <Text style={styles.buttonText}>{arrowRight}</Text>
                   </View>
                 </TouchableOpacity>
 
                 {/* PRAYERS */}
                 <TouchableOpacity onPress={() => this.route('PrayerList')} style={styles.prayerButton}>
                   <View style={styles.prayerText}>
-                    <Text style={styles.prayerTex}>Prayers</Text>
+                    <Text style={styles.prayerTex}>Prayers {arrowRightSmall}</Text>
                   </View>
                   <View style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>{prayer}</Text>
-                    <Text style={styles.buttonText}>{arrowRight}</Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -259,8 +255,11 @@ const styles = StyleSheet.create({
     color: colors.blue,
   },
   todayOpacity: {
-    marginTop: 35,
-    marginBottom: 30,
+    backgroundColor: colors.invisiBlue,
+    paddingVertical: 20,
+    paddingHorizontal: 32,
+    borderRadius: 10,
+    marginVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
