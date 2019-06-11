@@ -17,6 +17,8 @@ export default {
   maya: '#4FC1F9',
   teal: '#2A6684',
   blue: '#6BEAFE',
+  transBlue: 'rgba(107, 234, 254, 0.4)',
+  invisiBlue: 'rgba(107, 234, 254, 0.1)',
   red: '#FF8C85',
   darkgray: '#505050',
 };
