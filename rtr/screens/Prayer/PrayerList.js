@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Image, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
+import {StyleSheet, Image, View, Text, ScrollView, ImageBackground, TouchableOpacity, Platform} from 'react-native';
 import {Button} from 'react-native-elements';
 import {width, height} from '../../constants/Layout';
 import colors from '../../constants/Colors';

@@ -11,21 +11,16 @@ import colors from '../constants/Colors';
 import {connect} from 'react-redux';
 import {getAllUsers} from '../ducks/reducers/userReducer';
 import Carousel from '../components/Carousel/Carousel';
-import Animation from 'lottie-react-native';
-import title from '../assets/animations/titleAnim.json';
 
 class SplashScreen extends React.Component {
   state = {
     user: {},
+    name: 'wick',
   };
 
   static navigationOptions = {
     header: null,
   };
-
-  componentDidMount() {
-    this.animation.play(0, 164);
-  }
 
   getStarted = () => {
     this.props.navigation.navigate('Home');

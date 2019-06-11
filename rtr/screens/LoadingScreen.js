@@ -3,7 +3,6 @@ import {StyleSheet, View, ImageBackground} from 'react-native';
 import {AsyncStorage} from 'react-native';
 import {height, width} from '../constants/Layout';
 import clouds from '../assets/images/login-background.jpg';
-
 import Animation from 'lottie-react-native';
 import stopwatch from '../assets/animations/titleAnim.json';
 
