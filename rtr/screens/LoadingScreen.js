@@ -23,13 +23,12 @@ export default class LoadingScreen extends React.Component {
     this.animation.play();
     if (user) {
       setTimeout(() => {
-        this.props.navigation.navigate('Splash');
-        // NEED TO SWAP NAV LOGIC BEFORE PUSHING !!!
+        this.props.navigation.navigate('Home');
       }, !isLoading);
     } else {
       setTimeout(() => {
-        this.props.navigation.navigate('Splash');
-      }, 2000);
+        this.props.navigation.navigate('Home');
+      }, 200);
     }
   };
 
@@ -38,7 +37,7 @@ export default class LoadingScreen extends React.Component {
       <ImageBackground source={clouds} style={styles.container}>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <Animation
-            ref={animation => {
+            ref={(animation) => {
               this.animation = animation;
             }}
             style={{width: 350, height: 350}}
