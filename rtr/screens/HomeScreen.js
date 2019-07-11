@@ -1,12 +1,21 @@
 import React from 'react';
-import {Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {height, width} from '../constants/Layout';
-import {Button} from 'react-native-elements';
-import homescreen from '../assets/images/homescreen.jpeg';
-import colors from '../constants/Colors';
-import Icon from 'react-native-vector-icons/Feather';
-import Icon2 from 'react-native-vector-icons/AntDesign';
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+// Packages
 import Animation from 'lottie-react-native';
+import { Button } from 'react-native-elements';
+import Pulse from 'react-native-pulse';
+
+// Header & Footer
+import Header from './Header';
+import Footer from './Footer';
+
+// Constants
+import { width, height } from '../constants/Layout';
+import colors from '../constants/Colors';
+
+// Assets
+import homescreen from '../assets/images/homescreen.jpeg';
 import title from '../assets/animations/titleAnim.json';
 import rosary from '../assets/images/rosary.png';
 import pray from '../assets/images/praying-hands.png';
@@ -16,15 +25,17 @@ export default class HomeScreen extends React.Component {
     screen: 'Home',
     today: '',
   };
+
   static navigationOptions = {
-    header: null,
+    navigationOptions: {
+      header: null
+    }
   };
 
   componentDidMount() {
     this.animation.play(0, 164);
-    this.animationb.play(145, 164);
-    let month = new Date().toLocaleString('en-us', {month: 'long'});
-    let weekday = new Date().toLocaleString('en-us', {weekday: 'long'});
+    let month = new Date().toLocaleString('en-us', { month: 'long' });
+    let weekday = new Date().toLocaleString('en-us', { weekday: 'long' });
     let day = new Date().getDate();
     this.setState({
       today: `${weekday}, ${month} ${day + this.getDaySuperscript(day)}, ${new Date().getFullYear()}`,
@@ -52,10 +63,10 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    const {screen, today} = this.state;
-    const icon1 = <Icon name='linkedin' size={60} color={colors.white} />;
-    const arrowRightSmall = <Icon name='arrow-right' size={15} color={colors.blue} />;
-    const arrowRight = <Icon name='arrow-right' size={25} color={colors.white} style={{marginBottom: 15}} />;
+    const { today } = this.state;
+    const prayer = <Image source={pray} style={{ height: 100, width: 100 }} />;
+    const rosaryLink = <Image source={rosary} style={{ height: 100, width: 100 }} />;
+
     const play = (
       <Animation
         ref={(animation) => {
@@ -63,48 +74,23 @@ export default class HomeScreen extends React.Component {
         }}
         loop={false}
         source={title}
-        style={{marginLeft: 3, marginTop: 1}}
+        style={{ marginLeft: 3, marginTop: 1 }}
       />
     );
-    const playRoute = (
-      <Animation
-        ref={(animation) => {
-          this.animationb = animation;
-        }}
-        loop={false}
-        source={title}
-        style={styles.playIcon}
-      />
-    );
-    const rosaryBeads = <Image source={rosary} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
-    const prayerHands = <Image source={pray} style={{height: 20, width: 20, marginBottom: 4, marginTop: 4}} />;
-    const prayer = <Image source={pray} style={{height: 100, width: 100}} />;
-    const rosaryLink = <Image source={rosary} style={{height: 100, width: 100}} />;
 
     return (
-      <ImageBackground source={homescreen} style={{flex: 1, opacity: 0.85}}>
-        {/* HEADER */}
-        <View style={styles.headerContainer}>
-          <TouchableOpacity
-            style={{paddingLeft: 30}}
-            onPress={() => {
-              this.route('Home');
-            }}>
-            {/* Slide out menu from the hamburger menu for profile, help, rating the app, FAQs, etc */}
-            <Icon name='menu' size={30} color='#fff' />
-          </TouchableOpacity>
-          <Text style={{color: colors.white, fontSize: 20}}>Home</Text>
-          <TouchableOpacity
-            style={{paddingRight: 30}}
-            onPress={() => {
-              this.route('User');
-            }}>
-            <Icon2 name='user' size={30} color='#fff' />
-          </TouchableOpacity>
-        </View>
+      <ImageBackground
+        source={homescreen}
+        style={{ flex: 1, opacity: 0.85 }}>
 
-        {/* BODY */}
-        <ScrollView>
+        {/* HEADER */}
+        <Header
+          screen={this.state.screen}
+          navigation={this.props.navigation}
+        />
+
+        {/* HOME BODY */}
+        <ScrollView style={styles.scrollContainer}>
           <View
             style={{
               flex: 1,
@@ -119,36 +105,61 @@ export default class HomeScreen extends React.Component {
                 alignContent: 'center',
                 justifyContent: 'center',
               }}>
+
               {/* TODAY'S ROSARY */}
-              <TouchableOpacity onPress={() => this.route('RosaryList')} style={styles.todayOpacity}>
+              <TouchableOpacity
+                onPress={() => this.route('RosaryList')}
+                style={styles.todayOpacity}>
                 <View style={styles.todayText}>
-                  <Text style={styles.todayText}>Today's Rosary {arrowRightSmall}</Text>
+                  <Text style={styles.todayText}>
+                    Today's Rosary
+                  </Text>
                 </View>
-                <Text style={styles.todayDate}>{today}</Text>
+                <Text style={styles.todayDate}>
+                  {today}
+                </Text>
               </TouchableOpacity>
 
               {/* PLAY BUTTON */}
-              <Button icon={play} onPress={() => this.route('PrayerPlayer')} buttonStyle={styles.playButton} />
+              <View style={{ position: 'relative' }}>
+                <Button
+                  icon={play} onPress={() => this.route('PrayerPlayer')}
+                  buttonStyle={styles.playButton} />
+              </View>
 
               {/* ROSARY & PRAYER BUTTONS */}
-              <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: 20}}>
+              <View
+                style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: 20 }}>
+
                 {/* ROSARIES */}
-                <TouchableOpacity onPress={() => this.route('RosaryList')} style={styles.prayerButton}>
+                <TouchableOpacity
+                  onPress={() => this.route('RosaryList')}
+                  style={styles.prayerButton}>
                   <View style={styles.prayerText}>
-                    <Text style={styles.prayerTex}>Rosaries {arrowRightSmall}</Text>
+                    <Text style={styles.prayerTextColor}>
+                      Rosaries
+                    </Text>
                   </View>
                   <View style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>{rosaryLink}</Text>
+                    <Text style={styles.buttonText}>
+                      {rosaryLink}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
                 {/* PRAYERS */}
-                <TouchableOpacity onPress={() => this.route('PrayerList')} style={styles.prayerButton}>
+                <TouchableOpacity
+                  onPress={() => this.route('PrayerList')}
+                  style={styles.prayerButton}>
                   <View style={styles.prayerText}>
-                    <Text style={styles.prayerTex}>Prayers {arrowRightSmall}</Text>
+                    <Text style={styles.prayerTextColor}>
+                      Prayers
+                    </Text>
                   </View>
                   <View style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>{prayer}</Text>
+                    <Text style={styles.buttonText}>
+                      {prayer}
+                    </Text>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -157,64 +168,21 @@ export default class HomeScreen extends React.Component {
         </ScrollView>
 
         {/* FOOTER */}
-        <View style={styles.footerContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('Home');
-            }}
-            style={styles.iconContainer}>
-            <Icon2 name='home' size={22} color='#D4D2D2' style={[styles.navIcon, {marginTop: 4}]} />
-            <Text style={styles.navText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('RosaryList');
-            }}
-            style={styles.iconContainer}>
-            {rosaryBeads}
-            <Text style={styles.navText}>Rosaries</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('PrayerList');
-            }}
-            style={styles.iconContainer}>
-            {prayerHands}
-            <Text style={styles.navText}>Prayers</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('PrayerPlayer');
-            }}
-            style={styles.iconContainer}>
-            {playRoute}
-            <Text style={styles.playText}>Play</Text>
-          </TouchableOpacity>
-        </View>
+        <Footer navigation={this.props.navigation} />
       </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollContainer: {
     flex: 1,
-  },
-  headerContainer: {
-    backgroundColor: colors.darkgray,
-    width,
-    height: height / 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 35,
-  },
-  home: {
-    margin: 20,
+    marginTop: height / 9,
   },
   playButton: {
-    backgroundColor: colors.invisiBlue,
-    shadowOffset: {width: 0, height: 8},
+    position: 'relative',
+    backgroundColor: colors.transBlue,
+    shadowOffset: { width: 0, height: 8 },
     shadowColor: colors.blue,
     shadowOpacity: 1,
     shadowRadius: 50,
@@ -248,72 +216,46 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderBottomWidth: 3,
     borderColor: colors.transBlue,
+    fontWeight: 'bold'
   },
-  prayerTex: {
+  prayerTextColor: {
+    fontFamily: 'Baskerville-Bold',
     fontSize: 20,
+    fontWeight: '900',
     paddingBottom: 10,
     color: colors.blue,
   },
   todayOpacity: {
-    backgroundColor: colors.invisiBlue,
+    backgroundColor: colors.transBlue,
     paddingVertical: 20,
-    paddingHorizontal: 32,
-    borderRadius: 10,
+    width: width - 50,
+    borderRadius: 5,
     marginVertical: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
   todayText: {
+    fontFamily: 'Baskerville-Bold',
+    fontSize: 18,
+    fontWeight: '900',
+    color: colors.white,
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 18,
     marginBottom: 5,
-    color: colors.blue,
-    borderBottomWidth: 3,
-    borderColor: colors.transBlue,
   },
   todayDate: {
-    color: colors.white,
+    fontFamily: 'Avenir Next',
+    fontSize: 20,
     fontWeight: 'bold',
-    fontSize: 27,
-  },
-  footerContainer: {
-    backgroundColor: colors.darkgray,
-    opacity: 0.8,
-    width,
-    height: height / 13,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 50,
-  },
-  iconContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 12,
-  },
-  navText: {
-    fontSize: 9,
+    letterSpacing: 2,
     color: colors.white,
-    fontWeight: 'bold',
-    opacity: 0.8,
-    justifyContent: 'center',
   },
   playIcon: {
     height: 30,
     width: 40,
-    shadowOffset: {width: 1, height: 1},
+    shadowOffset: { width: 1, height: 1 },
     shadowColor: colors.blue,
     shadowOpacity: 1,
     shadowRadius: 10,
-  },
-  playText: {
-    fontSize: 9,
-    color: colors.blue,
-    opacity: 0.8,
-    justifyContent: 'center',
-    textShadowOffset: {width: 1, height: 1},
-    textShadowColor: colors.blue,
-    textShadowRadius: 10,
   },
 });

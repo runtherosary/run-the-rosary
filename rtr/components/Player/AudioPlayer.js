@@ -57,6 +57,7 @@ class AudioPlayer extends Component {
           <TouchableOpacity onPress={() => this.setState({favorite: !favorite})}>{heart}</TouchableOpacity>
         </View>
         <Player
+          style={{flex: 1}}
           onComplete={() => console.log('finished')}
           completeButtonText={'Return Home'}
           uri={url ? url : 'http://russprince.com/hobbies/files/13%20Beethoven%20-%20Fur%20Elise.mp3'}
@@ -65,11 +66,7 @@ class AudioPlayer extends Component {
           showBackButton={false}
           repeat={this.state.repeatOn}
           showTimeStamp={false}
-          // timeStampStyle={{
-          //   color: 'white',
-          //   fontSize: 15,
-          // }}
-          playbackSlider={renderProps => {
+          playbackSlider={(renderProps) => {
             return (
               <Slider
                 minimumValue={0}
@@ -100,8 +97,8 @@ const styles = {
     marginBottom: 15,
   },
   art: {
-    height: width - 60,
-    width: width - 60,
+    height: width - 75,
+    width: width - 75,
   },
   titleContainer: {
     width: width - 50,
@@ -117,7 +114,7 @@ const styles = {
   favorite: {},
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     prayers: state.prayerReducer.prayers,
     prayersLoading: state.prayerReducer.prayersLoading,

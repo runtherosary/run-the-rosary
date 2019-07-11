@@ -1,16 +1,21 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView, ImageBackground, TouchableOpacity} from 'react-native';
-import {AsyncStorage} from 'react-native';
-import {Button} from 'react-native-elements';
-import {height, width} from '../constants/Layout';
-import background from '../assets/images/splash-background.jpg';
-import greentrail from '../assets/images/greentrail.jpg';
-import mountain from '../assets/images/mountain.jpg';
+import { StyleSheet, View, Text, ScrollView, ImageBackground } from 'react-native';
 
+// Packages
+import Animation from 'lottie-react-native';
+import { Button } from 'react-native-elements';
+
+// Redux
+import { connect } from 'react-redux';
+import { getAllUsers } from '../ducks/reducers/userReducer';
+
+// Constants
+import { width } from '../constants/Layout';
 import colors from '../constants/Colors';
-import {connect} from 'react-redux';
-import {getAllUsers} from '../ducks/reducers/userReducer';
-import Carousel from '../components/Carousel/Carousel';
+
+// Assets
+import mountain from '../assets/images/mountain.jpg';
+import titleAnim from '../assets/animations/titleAnim.json';
 
 class SplashScreen extends React.Component {
   state = {
@@ -22,6 +27,10 @@ class SplashScreen extends React.Component {
     header: null,
   };
 
+  componentDidMount = async () => {
+    this.animation.play(0, 164);
+  };
+
   getStarted = () => {
     this.props.navigation.navigate('Home');
     // We'll need to add some logic to conditionally navigate based on if its a new user visiting or an existing user
@@ -29,9 +38,9 @@ class SplashScreen extends React.Component {
 
   render() {
     return (
-      <ImageBackground source={mountain} style={{flex: 1}}>
+      <ImageBackground source={mountain} style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.container}>
-          <View style={{flex: 1, width, marginTop: 40}}>
+          <View style={{ flex: 1, width, marginTop: 40 }}>
             <Text style={styles.title}>Run the Rosary</Text>
           </View>
           <Animation
@@ -39,7 +48,7 @@ class SplashScreen extends React.Component {
               this.animation = animation;
             }}
             loop={false}
-            source={title}
+            source={titleAnim}
             speed={0.7}
           />
           <View style={styles.register}>
@@ -53,7 +62,7 @@ class SplashScreen extends React.Component {
                 width: width - 50,
               }}
               textStyle={{
-                color: 'white',
+                color: colors.white,
                 fontSize: 30,
                 fontWeight: 'bold',
                 letterSpacing: 2,
@@ -64,7 +73,7 @@ class SplashScreen extends React.Component {
               onPress={() => this.props.navigation.navigate('Home')}
               buttonStyle={{
                 backgroundColor: 'transparent',
-                borderColor: 'white',
+                borderColor: colors.white,
                 borderWidth: 1,
                 marginVertical: 5,
                 height: 50,
@@ -100,7 +109,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir Next',
     fontWeight: '500',
     textShadowColor: 'gray',
-    textShadowOffset: {width: -1, height: 1},
+    textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 2,
     textAlign: 'center',
     color: 'white',
@@ -122,4 +131,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {getAllUsers})(SplashScreen);
+export default connect(mapStateToProps, { getAllUsers })(SplashScreen);
