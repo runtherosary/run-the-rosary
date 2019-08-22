@@ -5,10 +5,6 @@ import { Provider } from 'react-redux';
 import store from './ducks/store';
 
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
-
   render() {
     return (
       <Provider store={store}>
