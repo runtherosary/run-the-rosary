@@ -20,7 +20,6 @@ export default class Header extends React.Component {
   }
 
   render() {
-    // console.warn(this.props.expanded);
     const { expanded } = this.state;
     const down = <Icon name='down' color={colors.white} size={15} />;
     const up = <Icon name='up' color={colors.white} size={15} />;
@@ -46,7 +45,7 @@ export default class Header extends React.Component {
         {expanded ? (
           <ScrollView contentContainerStyle={styles.body}>
             <Text>
-              This is da panel body up in hurrrr
+              {/* All of the different routes will go here */}
             </Text>
           </ScrollView>
         ) : null}

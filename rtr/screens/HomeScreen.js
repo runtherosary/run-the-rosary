@@ -1,3 +1,7 @@
+// TODO
+// Pulse will probably give us probably down the line
+// ANy creative ideas regarding the play button, & rosary/prayer buttons are welcome
+
 import React from 'react';
 import { Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -74,7 +78,7 @@ export default class HomeScreen extends React.Component {
         }}
         loop={false}
         source={title}
-        style={{ marginLeft: 3, marginTop: 1 }}
+        style={{ marginLeft: 2, marginTop: 1 }}
       />
     );
 
@@ -121,15 +125,25 @@ export default class HomeScreen extends React.Component {
               </TouchableOpacity>
 
               {/* PLAY BUTTON */}
-              <View style={{ position: 'relative' }}>
+              <View style={{ width, height: 300 }}>
+                <Pulse
+                  style={styles.pulse}
+                  color={colors.transBlue}
+                  speed={7}
+                  numPulses={5}
+                >
+                </Pulse>
                 <Button
-                  icon={play} onPress={() => this.route('PrayerPlayer')}
-                  buttonStyle={styles.playButton} />
+                  title="START"
+                  icon={play}
+                  buttonStyle={styles.startButton}
+                  titleStyle={styles.startButtonText}
+                  onPress={() => this.route('PrayerPlayer')} />
               </View>
 
               {/* ROSARY & PRAYER BUTTONS */}
               <View
-                style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: 20 }}>
+                style={styles.prayerButtonContainer}>
 
                 {/* ROSARIES */}
                 <TouchableOpacity
@@ -179,25 +193,35 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: height / 9,
   },
-  playButton: {
-    position: 'relative',
-    backgroundColor: colors.transBlue,
-    shadowOffset: { width: 0, height: 8 },
-    shadowColor: colors.blue,
-    shadowOpacity: 1,
-    shadowRadius: 50,
-    elevation: 17,
-    height: 275,
-    width: 275,
-    borderRadius: 140,
-    borderColor: colors.blue,
-    borderWidth: 1,
-    margin: 30,
+  pulse: {},
+  startButton: {
+    position: "absolute",
+    top: 65,
+    right: 72,
+    height: 272,
+    width: 272,
+    zIndex: 900,
+    backgroundColor: colors.blue,
+    borderRadius: 136,
+  },
+  startButtonText: {
+    fontFamily: 'Baskerville',
+    color: colors.white,
+    fontSize: 48,
+    marginRight: 2,
+  },
+  prayerButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 20
   },
   prayerButton: {
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    margin: 30,
+    marginHorizontal: 30,
+    marginBottom: 30,
+    marginTop: 100,
   },
   buttonContainer: {
     flexDirection: 'row',
