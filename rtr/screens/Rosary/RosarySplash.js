@@ -1,8 +1,15 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView, ImageBackground, Animated, Easing} from 'react-native';
-import {Button} from 'react-native-elements';
-import {height, width} from '../../constants/Layout';
-import Footer from '../../components/Footer/Footer';
+import { StyleSheet, View, ScrollView, ImageBackground } from 'react-native';
+
+// Packages
+import { Button } from 'react-native-elements';
+
+// Header & Footer
+import Footer from '../Footer';
+import Header from '../Header';
+
+// Constants
+import { height, width } from '../../constants/Layout';
 
 export default class RosarySplash extends React.Component {
   static navigationOptions = {
@@ -10,11 +17,14 @@ export default class RosarySplash extends React.Component {
   };
 
   render() {
+    const screen = "RosarySplash"
     return (
-      <ImageBackground style={{flex: 1}}>
-        <Text style={styles.title}>Rosary</Text>
+      <ImageBackground style={{ flex: 1 }}>
+        <Header
+          navigation={this.props.navigation}
+          screen={screen} />
         <ScrollView contentContainerStyle={styles.container}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <Button
               title='Mystery'
               onPress={() => this.props.navigation.navigate('Home')}
@@ -37,7 +47,7 @@ export default class RosarySplash extends React.Component {
             />
           </View>
         </ScrollView>
-        <Footer />
+        <Footer navigation={this.props.navigation} />
       </ImageBackground>
     );
   }
@@ -51,7 +61,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textShadowColor: 'black',
-    textShadowOffset: {width: -1, height: 1},
+    textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 8,
     textAlign: 'center',
     color: 'white',

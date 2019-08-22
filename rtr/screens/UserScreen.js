@@ -1,22 +1,34 @@
 import React from 'react';
-import {Image, ImageBackground, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {height, width} from '../constants/Layout';
-import {Button} from 'react-native-elements';
-import homescreen from '../assets/images/homescreen.jpeg';
-import colors from '../constants/Colors';
-import Icon from 'react-native-vector-icons/Feather';
-import Icon2 from 'react-native-vector-icons/AntDesign';
-import Title from '../components/Title';
-import Animation from 'lottie-react-native';
-import title from '../assets/animations/titleAnim.json';
-import rosary from '../assets/images/rosary.png';
+import { ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import Footer from '../components/Footer/Footer';
+// Packages
+import { Button } from 'react-native-elements';
+import Animation from 'lottie-react-native';
+import Icon from 'react-native-vector-icons/Feather';
+
+// Components
+
+// Header & Footer
+import Header from "../screens/Header";
+import Footer from '../screens/Footer';
+
+// Constants
+import { height, width } from '../constants/Layout';
+import colors from '../constants/Colors';
+
+// Assets
+import homescreen from '../assets/images/homescreen.jpeg';
+
 
 export default class UserScreen extends React.Component {
-  state = {screen: 'Home'};
+  state = {
+    screen: "User"
+  };
+
   static navigationOptions = {
-    header: null,
+    navigationOptions: {
+      header: null
+    }
   };
 
   route(path) {
@@ -24,91 +36,178 @@ export default class UserScreen extends React.Component {
   }
 
   render() {
-    const {screen} = this.state;
-    const icon1 = <Icon name='linkedin' size={60} color='white' />;
-
+    const arrowRightSmall = <Icon name='arrow-right' size={15} color={colors.blue} />;
     return (
-      <ImageBackground source={homescreen} style={{flex: 1, opacity: 0.85}}>
-        <View style={styles.headerContainer}>
-          <TouchableOpacity
-            style={{paddingLeft: 20}}
-            onPress={() => {
-              this.route('Home');
-            }}>
-            <Icon name='menu' size={30} color='#fff' />
-          </TouchableOpacity>
-          <Text>Run the Rosary</Text>
-          <TouchableOpacity
-            style={{paddingRight: 20}}
-            onPress={() => {
-              this.route('User');
-            }}>
-            <Icon2 name='user' size={30} color='#fff' />
-          </TouchableOpacity>
-        </View>
+      <ImageBackground source={homescreen} style={{ opacity: 0.85 }}>
+
+        {/* HEADER */}
+        <Header navigation={this.props.navigation} screen={this.state.screen} />
+
+        {/* USER PROFILE BODY */}
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          <Text style={{color: '#fff'}}>User Profile</Text>
+
+          {/* User Metrics */}
+          <View style={styles.metricContainer}>
+            <View style={styles.metric}>
+              <Text style={styles.metricType}>Username</Text>
+              <Text style={styles.metricText}>ericwickham</Text>
+            </View>
+            <View style={styles.metric}>
+              <Text style={styles.metricType}>Password</Text>
+              <Text style={styles.metricText}>*********</Text>
+            </View>
+            <View style={styles.metric}>
+              <Text style={styles.metricType}>Gender</Text>
+              <Text style={styles.metricText}>Male</Text>
+            </View>
+            <View style={styles.metric}>
+              <Text style={styles.metricType}>Age</Text>
+              <Text style={styles.metricText}>26</Text>
+            </View>
+            <View style={styles.metric}>
+              <Text style={styles.metricType}>Height</Text>
+              <Text style={styles.metricText}>6'2"</Text>
+            </View>
+            <View style={styles.metric}>
+              <Text style={styles.metricType}>Weight</Text>
+              <Text style={styles.metricText}>225</Text>
+            </View>
+          </View>
+
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap' }}>
+
+            {/* User Stats */}
+            <View style={styles.statButton}>
+              <View style={styles.statUnderline}>
+                <Text style={styles.statText}>
+                  Total mil
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>
+                  12.55
+                  {/* Total distance covered by user */}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.statButton}>
+              <View style={styles.statUnderline}>
+                <Text style={styles.statText}>
+                  hr : min : sec
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>
+                  3:15:43
+                  {/* Total time spent working out */}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.statButton}>
+              <View style={styles.statUnderline}>
+                <Text style={styles.statText}>
+                  Total runs
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>
+                  13
+                  {/* Number of runs/walks */}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.statButton}>
+              <View style={styles.statUnderline}>
+                <Text style={styles.statText}>
+                  Calories
+                </Text>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>
+                  6421
+                  {/* Total number of calories burned */}
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          <View>
+            <Text style={styles.statText}>
+              Recent Activities
+              {arrowRightSmall}
+            </Text>
+          </View>
         </ScrollView>
-        <View style={styles.footerContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('Home');
-            }}>
-            <Icon2 name='home' size={30} color='#fff' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('RosaryList');
-            }}>
-            <Icon2 name='book' size={30} color='#fff' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('PrayerList');
-            }}>
-            <Icon2 name='plus' size={30} color='#fff' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              this.route('PrayerPlayer');
-            }}>
-            <Icon2 name='play' size={30} color='#fff' />
-          </TouchableOpacity>
-        </View>
+
+        {/* Footer */}
+        <Footer navigation={this.props.navigation} />
       </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  headerContainer: {
-    backgroundColor: 'black',
-    opacity: 0.8,
-    width,
-    height: height / 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 35,
-  },
-  home: {
-    margin: 20,
-  },
   scrollContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: height / 9,
   },
-  footerContainer: {
-    backgroundColor: colors.darkgray,
-    opacity: 0.8,
-    width,
-    height: height / 13,
+  metricContainer: {
+    marginTop: 20,
+    flexDirection: 'column',
+    width: width - 40,
+    marginHorizontal: 20
+  },
+  metric: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 50,
+    alignItems: 'flex-start',
+    marginVertical: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    borderRadius: 3,
+    backgroundColor: 'rgba(52, 52, 52, 0.7)',
+  },
+  metricType: {
+    color: colors.white,
+  },
+  metricText: {
+    color: colors.blue,
+    fontWeight: 'bold',
+  },
+  statButton: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 25,
+  },
+  statText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    paddingBottom: 10,
+    color: colors.blue,
+  },
+  statUnderline: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
+    borderBottomWidth: 3,
+    borderColor: colors.transBlue,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 'bold',
+    fontSize: 45,
+    paddingBottom: 10,
+    color: 'white',
   },
 });

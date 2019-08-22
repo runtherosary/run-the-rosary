@@ -1,9 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, ImageBackground} from 'react-native';
-import {AsyncStorage} from 'react-native';
-import {height, width} from '../constants/Layout';
-import clouds from '../assets/images/login-background.jpg';
+import { StyleSheet, View, ImageBackground } from 'react-native';
+
+// Packages
+import { AsyncStorage } from 'react-native';
 import Animation from 'lottie-react-native';
+
+// Assets
+import clouds from '../assets/images/login-background.jpg';
 import stopwatch from '../assets/animations/titleAnim.json';
 
 export default class LoadingScreen extends React.Component {
@@ -12,11 +15,11 @@ export default class LoadingScreen extends React.Component {
   };
 
   componentDidMount = async () => {
-    let {isLoading} = this.state;
+    let { isLoading } = this.state;
     const user = await AsyncStorage.getItem('user');
 
     if (user) {
-      this.setState({isLoading: false});
+      this.setState({ isLoading: false });
     }
 
     this.animation.play();
@@ -27,19 +30,19 @@ export default class LoadingScreen extends React.Component {
     } else {
       setTimeout(() => {
         this.props.navigation.navigate('Home');
-      }, 200);
+      }, 0);
     }
   };
 
   render() {
     return (
       <ImageBackground source={clouds} style={styles.container}>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Animation
             ref={(animation) => {
               this.animation = animation;
             }}
-            style={{width: 350, height: 350}}
+            style={{ width: 350, height: 350 }}
             loop={true}
             source={stopwatch}
           />
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textShadowColor: 'black',
-    textShadowOffset: {width: -1, height: 1},
+    textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 8,
     textAlign: 'center',
     color: 'white',
